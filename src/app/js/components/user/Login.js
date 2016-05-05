@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, routerShape } from 'react-router';
-import { __FORMCHECK__ } from '../../../../../config/class';
+import { __FORMCHECK__ } from '../../../../config/class';
 import { message } from 'antd';
 import __has from 'lodash/has';
 import __assign from 'lodash/assign';
@@ -30,7 +30,7 @@ export default class Login extends Component {
 
     checkForm(e) {
         if(__FORMCHECK__.isEmpty(e.target.value)) {
-            var msg = e.target.name == "phone" ? "手机号码不能为空" : "密码不能为空";
+            var msg = e.target.name == "phone" ? "用户名不能为空" : "密码不能为空";
             this.setState({
                 message: __assign(this.state.message, {[e.target.name]: msg}),
             })
@@ -54,7 +54,7 @@ export default class Login extends Component {
             this.props.userBoundAc.login(this.state.loginObj);
         }else{
             Object.keys(this.state.loginObj).map(key => {
-                var msg = key == "phone" ? "手机号码不能为空" : "密码不能为空";
+                var msg = key == "phone" ? "用户名不能为空" : "密码不能为空";
                 if(this.state.loginObj[key] == "") {
                     this.setState({
                         message: Object.assign(this.state.message, {[key]: msg}),
@@ -89,6 +89,7 @@ export default class Login extends Component {
     render() {
         return(
             <div className="user-right-loginForm">
+                <h2 className="user-right-title">欢迎登录</h2>
                 <input className="user-right-user"
                     type='text'
                     name="phone"
@@ -96,7 +97,7 @@ export default class Login extends Component {
                     onFocus={this.resetMessage.bind(this)}
                     onBlur={this.checkForm.bind(this)}
                     value={this.state.loginObj.phone}
-                    placeholder="手机号"
+                    placeholder="用户名"
                     autoComplete="off" />
                 <p className="user-msg">{this.state.message.phone}</p>
                 <input className="user-right-pwd"
@@ -110,16 +111,9 @@ export default class Login extends Component {
                     placeholder="密码"
                     autoComplete="off" />
                 <p className="user-msg">{this.state.message.userPwd}</p>
-                <p className="user-right-autoLogin clearfix">
-                    <input className="user-remenberPwd" type="checkBox" name="autoLogin" />&nbsp;&nbsp;记住密码
-                    <span className="user-right-forgetPwd" href="#"><Link to={{pathname: 'user'}}>忘记密码?</Link></span>
-                </p>
                 <button onClick={this.login.bind(this)}
                     className="user-right-sub"
                     disabled={this.state.logining? "disabled" : ""}>{this.state.logining? "登录中" : "立即登录"}</button>
-                <div className="user-right-regist">
-                    没有账号?<Link className="right" to={{pathname: "regist"}}>立即注册</Link>
-                </div>
             </div>
         )
     }

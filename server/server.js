@@ -18,9 +18,14 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 //动态刷新cookie时间
-app.all('*', function(req, res, next) {
+app.use(function(req, res, next) {
+    console.log(req.cookies, req.url, '===');
     if(req.cookies.info) {
         res.cookie('info', req.cookies.info, {maxAge: 30*60*1000});
+    }
+    if(req.url != '/login' && req.url != '/api/client/login' && !req.cookies.info){
+        console.log('====');
+        return res.redirect('/login');
     }
     next();
 })

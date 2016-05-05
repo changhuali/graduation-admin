@@ -32,8 +32,10 @@ class App extends Component {
         })
     }
 
-    componentDidMount() {
-        this.props.userBoundAc.checkInfo();
+    componentWillMount() {
+        if(this.props.location.pathname != '/login') {
+            this.props.userBoundAc.checkInfo();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -41,16 +43,16 @@ class App extends Component {
     }
 
     render(){
+        console.log(this.props.location.pathname);
         return(
             <div>
+                {this.props.location.pathname == '/login' ?
+                "":
                 <div>
                     <Header {...this.props} />
-                </div>
-                <div className="main">
-                    {React.cloneElement(this.props.children, Object.assign({}, this.props, {hideNav: this.hideNav.bind(this)}))}
-                </div>
+                </div>}
                 <div>
-                    <Footer {...this.props} />
+                    {React.cloneElement(this.props.children, Object.assign({}, this.props, {hideNav: this.hideNav.bind(this)}))}
                 </div>
             </div>
         )

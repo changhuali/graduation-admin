@@ -61,6 +61,7 @@ export function logout() {
         .end((err, resp) => {
             if(resp.ok) {
                 message.success('退出成功');
+                location.href='/login';
             }else{
                 message.error('退出失败')
             }

@@ -1,5 +1,26 @@
-.main{
-    width: 970px;
-    margin: 0 auto;
-    min-height: 600px;
+.index-wrap{
+    position: relative;
+    width: 100%;
+}
+.index{
+    position: absolute;
+    padding-top: 100px;
+    left: 50%;
+    margin-left: -485px;
+    width: 1200px;
+    min-height: 700px;
+}
+.index-list{
+    float: left;
+    width: 290px;
+    height: 150px;
+    margin-right: 50px;
+    margin-bottom: 40px;
+    line-height: 150px;
+    text-align: center;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 15px;
 }
