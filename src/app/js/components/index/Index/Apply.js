@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { Menu, Dropdown, Icon } from 'antd';
 
 import SearchBar from  '../../common/SearchBar';
 import CommonTable from '../../common/CommonTable';
@@ -16,24 +15,12 @@ export default class Apply extends Component{
         window.scrollTo(0, 0);
     }
 
-    operate() {
-        const menu = (
-            <Menu>
-                <Menu.Item>
-                    <a href="javascript:;">处理该申请</a>
-                </Menu.Item>
-                <Menu.Item>
-                    <a href="javascript:;">忽略该申请</a>
-                </Menu.Item>
-            </Menu>
-        );
-        return (
-            <Dropdown overlay={menu}>
-                <a className="ant-dropdown-link" href="#">
-                    操作
-                </a>
-            </Dropdown>
-        )
+    handleApply(id) {
+        console.log(id);
+    }
+
+    ignoreApply(id) {
+        console.log(id);
     }
 
     getSearchList(value) {
@@ -51,10 +38,14 @@ export default class Apply extends Component{
             ],
             item: DATA,
         };
+        const operateConfig = [
+            {action: '处理该请求', handle: this.handleApply},
+            {action: '忽略该请求', handle: this.ignoreApply},
+        ];
         return(
             <div className="apply-wrap">
                 <div className="apply">
-                    <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
+                    <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} operate={operateConfig} />
                     <CommonTable {...this.props} data={data} />
                 </div>
             </div>

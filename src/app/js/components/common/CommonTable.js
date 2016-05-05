@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { Menu, Dropdown, Icon } from 'antd';
 
 export default class CommonTable extends Component{
     constructor(props) {
         super(props);
         this.state={
         }
+    }
+
+    createMenuList() {
+        const list = [];
+        return list;
     }
 
     createItem() {
@@ -17,11 +23,28 @@ export default class CommonTable extends Component{
             );
         });
         this.props.data.item.map((valueObj, i) => {
+            const actionsMenu = (
+              <Menu>
+                {this.createMenuList(valueObj._id)}
+              </Menu>
+            );
             var tr = [];
             this.props.data.config.map((keyObj, j) => {
-                tr.push(
-                    <td key={'td'+j}>{keyObj.handle ? keyObj.handle(keyObj.key == 'operate' ? valueObj : valueObj[keyObj.key]) : valueObj[keyObj.key]}</td>
-                )
+                if(keyObj.key == 'operate') {
+                    tr.push(
+                        <td key={'td'+j}>
+                            <Dropdown overlay={actionsMenu}>
+                              <a className="ant-dropdown-link" href="#">
+                                操作 <Icon type="down" />
+                              </a>
+                            </Dropdown>
+                        </td>
+                    )
+                }else{
+                    tr.push(
+                        <td key={'td'+j}>{keyObj.handle ? keyObj.handle(valueObj[keyObj.key]) : valueObj[keyObj.key]}</td>
+                    )
+                }
             })
             tbody.push(<tr key={'tr'+i}>{tr}</tr>);
         })
