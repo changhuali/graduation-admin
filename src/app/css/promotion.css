@@ -1,0 +1,67 @@
+.promotion-wrap{
+  width: 100%;
+}
+.promotion{
+  width: 970px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+.promotion-item{
+  margin-bottom: 20px;
+}
+.promotion-img{
+  float: left;
+  width: 660px;
+}
+.promotion-title{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: rgb(92, 203, 69);
+}
+.promotion-right{
+  float: right;
+  width: 310px;
+  padding: 0 20px 20px 20px;
+  line-height: 25px;
+  box-sizing: border-box;
+}
+.promotion-viewDetail{
+  display: block;
+  margin-top: 20px;
+  padding: 5px 10px;
+  color: #fff;
+  background: rgb(63, 163, 54);
+  cursor: pointer;
+}
+.promotion-key{
+    margin-right: 10px;
+    color: rgb(159, 24, 85);
+}
+.promotion-value{
+    color: rgb(195, 110, 21);
+}
+/*详情*/
+.proDetail-wrap{
+    width: 100%;
+}
+.proDetail{
+    width: 1020px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+.proDetail-left{
+    float: left;
+    width: 720px;
+}
+.proDetail-right{
+    float: right;
+    width: 300px;
+    min-height: 800px;
+    padding-top: 160px;
+    box-sizing: border-box;
+}
+.proDetail-right p {
+    margin-bottom: 20px;
+    font-size: 14px;
+}

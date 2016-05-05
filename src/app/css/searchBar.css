@@ -1,0 +1,84 @@
+.searchBar-wrap{
+    width: 100%;
+}
+.searchBar{
+    width: 1220px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+.searchBar-img{
+    float: left;
+    width: 320px;
+    height: 70px;
+    margin-right: 95px;
+}
+.searchBar-img img{
+    width: 100%;
+    height: 100%;
+}
+.searchBar-from{
+    float: left;
+    width: 500px;
+    height: 40px;
+    margin-top: 13px;
+    border: 2px solid #01af63;
+}
+.pl10{
+    padding-left: 10px;
+}
+.searchBar-select{
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 100%;
+    line-height: 40px;
+    background: #fff;
+    color: #999;
+    border-right: 1px solid #eee;
+    box-sizing: border-box;
+}
+.searchBar-icon{
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    margin-top: -6px;
+}
+.searchBar-optionBox{
+    position: relative;
+    width: 100px;
+    z-index: 1;
+    background: #fff;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    border-top: none;
+}
+.searchBar-option{
+    cursor: pointer;
+    transition: all .3s;
+}
+.searchBar-option:hover{
+    background: #eee;
+}
+.searchBar-input{
+    float: left;
+    width: 300px;
+    height: 100%;
+    border: none;
+    padding-left: 10px;
+    outline: none;
+    box-sizing: border-box;
+}
+.searchBar-btn{
+    float: left;
+    width: 100px;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: #01af63;
+    color: #fff;
+}
+.searchBar-ad{
+    float: right;
+    width: 230px;
+    height: 70px;
+}

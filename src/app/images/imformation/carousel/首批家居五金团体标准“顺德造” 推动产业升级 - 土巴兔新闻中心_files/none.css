@@ -1,0 +1,158 @@
+<!doctype html>
+<!--[if IE 6]><html lang="en" class="ielt7  ielt8  ielt9 ielt10 en"><![endif]-->
+<!--[if IE 7]><html lang="en" class="ie7  ielt8  ielt9 ielt10 en"><![endif]-->
+<!--[if IE 8 ]><html lang="en" class="ie8 ielt9 ielt10 en"><![endif]-->
+<!--[if IE 9 ]><html lang="en" class="ie9 ielt10 en"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en" class=" en"><!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta name="renderer" content="webkit">
+        <title>土巴兔404页面</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" type="text/css" href="http://www.to8to.com/css/new_global.css">
+        <!--[if lt IE 9]>
+        <script src="http://www.to8to.com/gb_js/jquery-1.9.1.min.js"></script>
+        <![endif]-->
+        <!--[if gte IE 9]> 
+        <script src="http://www.to8to.com/gb_js/jquery-1.10.2.min.js"></script>
+        <![endif]-->
+        <!--[if !IE]><!-->
+        <script src="http://www.to8to.com/gb_js/jquery-1.10.2.min.js"></script>
+        <!--<![endif]-->
+        <script>
+            var jq = jQuery.noConflict();
+        </script>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <script type="text/javascript" src="http://www.to8to.com/gb_js/common_new.js"></script>
+        <style>
+            .header{height: auto;}
+            .container{height: 700px;}
+            .not_found{font-family: "微软雅黑","Microsoft YaHei",arial,"宋体";width: 541px;margin: 0 auto;padding-top: 106px;}
+            .not_found .not_found_img{background: url(http://img.to8to.com/decorate_gallery/images/png/404.png) no-repeat;display: block;width: 163px;height: 180px;float: left;}
+            .not_found .not_found_bd{float: left;margin-left: 40px;padding-top: 37px;}
+            .not_found .not_found_bd h1{font-weight: normal;font-size: 26px;color: #333;margin-bottom: 26px;}
+            .not_found .not_found_bd .not_found_info{font-size: 14px;color: #666;line-height: 26px;}
+            .not_found .not_found_bd .not_found_info a{color: #01af63;}
+            .not_found .not_found_bd .not_found_info a:hover{color: #f25618;}
+        </style>
+    </head>
+    <body>
+        <div class="global_wrap" id="gloWrap">
+            <div class="header">
+                <div class="header_center">
+                    <div class="header_center_container">
+						<div class="header_center_main">
+							<span class="hcc_logo">
+								<a href="http://www.to8to.com" class="logo" id="logourl" onClick="javascript:clickStream.getCvParams('1_9_7_1')">土巴兔装修网</a>
+							</span>
+						</div>
+					</div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="not_found clear">
+                    <span class="not_found_img"></span>
+                    <div class="not_found_bd">
+                        <h1>抱歉，您访问的页面不存在！</h1>
+                        <div class="not_found_info">
+                            <p>您可以尝试：</p>
+                            <p>1. 检查输入的网址，或者返回<a href="javascript:history.go(-1);">上一页</a></p>
+                            <p>2. 快速进入<a href="http://www.to8to.com">首页</a>、<a id="zxgs" href="http://www.to8to.com/company/">装修公司</a>、<a href="http://www.to8to.com/gonglve/">装修攻略</a>、<a href="http://xiaoguotu.to8to.com/">效果图</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" id="footerHeight">
+                <div class="footer_bottom">
+                    <div class="footer_bottom_container">
+                        <div class="fbc_menu">
+                            <ul>
+                                <li>
+                                    <a hidefocus="" href="http://www.to8to.com/about/index.html" target="_blank" rel="nofollow">关于我们</a>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <a hidefocus="" href="http://www.to8to.com/about/contact.html" target="_blank" rel="nofollow">联系我们</a>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <a hidefocus="" href="http://www.to8to.com/about/link.php" target="_blank" rel="nofollow">友情链接</a>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <a href="http://www.to8to.com/help" target="_blank" rel="nofollow">帮助中心</a>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <a hidefocus="" href="http://www.to8to.com/about/feedback.php" target="_blank" rel="nofollow">意见反馈</a>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <a hidefocus="" href="http://www.to8to.com/about/recruiter.php" target="_blank" rel="nofollow">高薪聘请</a>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <a hidefocus="" href="http://www.to8to.com/about/law.html" target="_blank" rel="nofollow">法律声明</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="fbc_copyright">© 2016 Tubatu.com 土巴兔装修网和设计师社区 保留所有权利</div>
+                        <div class="fbc_icp">中国装修网 <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备08125558号</a></div>
+                        <div class="fbc_icpico">
+                            <a href="http://www.ebs.gov.cn/EntCertificate.aspx?domainId=d6c3aa01-b00f-4d32-aef4-70ad63021bab" target="_blank" rel="nofollow"><span class="fbc_ico1"></span></a>
+                            <a href="http://www.sznet110.gov.cn/netalarm/index.jsp" target="_blank" rel="nofollow"><span class="fbc_ico2"></span></a>
+                            <a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101010155" target="_blank" rel="nofollow"><span class="fbc_ico3"></span></a>
+                            <a href="https://search.szfw.org/cert/l/CX20140929005207005275" target="_blank" rel="nofollow"><span class="fbc_ico4"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="http://www.to8to.com/get_city_name.php" type="text/javascript"></script>
+        <script type="text/javascript">
+        href_url = window.location.href;
+  if(!(href_url.indexOf('sz.to8to.com') !==-1 || href_url.indexOf('www.to8to.com') !==-1)){
+    jq('.fbc_ico1').hide();
+  }
+            var current_tcode = getCookie('tcode', 1);
+            current_tcode = current_tcode ? current_tcode : 'sz';
+
+            var href = jq("#zxgs").attr('href');
+            var new_href = href.replace(/www/g, current_tcode);
+            jq("#zxgs").attr("href", new_href);
+
+        </script>
+        <script type="text/javascript">
+            //dean
+            var footHeight = Number(document.getElementById('footerHeight').offsetHeight) + 100,
+                    windowDomHeight = document.documentElement.clientHeight || document.body.clientHeight,
+                    windowScrollHeihgt = document.documentElement.scrollHeight || document.body.scrollHeight,
+                    headerHeight = document.getElementById('gloWrap').offsetHeight,
+                    cb = checkBrowser();
+
+            if (headerHeight < windowDomHeight) {
+                if (cb.version == "6") {
+                    document.getElementById('footerHeight').style.position = 'absolute';
+                } else {
+                    document.getElementById('footerHeight').style.position = 'fixed';
+                }
+                var wfHeight = windowDomHeight + footHeight
+                document.getElementById('gloWrap').style.height = windowDomHeight + "px";
+            } else if (headerHeight == windowDomHeight) {
+                if (cb.version == "6") {
+                    document.getElementById('footerHeight').style.position = 'absolute';
+                } else {
+                    document.getElementById('footerHeight').style.position = 'fixed';
+                }
+                document.getElementById('footerHeight').style.padding = "30px 0 0 0 "
+                var wfHeight = windowDomHeight + footHeight
+                document.getElementById('gloWrap').style.height = windowDomHeight + "px";
+            }
+        </script>
+        <script type="text/javascript">
+            headerFooter.init();
+        </script>
+    </body>
+</html>
