@@ -1,23 +1,12 @@
 .footer-wrap{
     width: 100%;
-    background: #1f1f1f;
     font-size: 12px;
+    background: rgba(147, 136, 149, 0.4);
 }
 .footer{
     width: 1220px;
     margin: 0 auto;
-    padding: 40px 0;
     text-align: center;
-}
-.footer p{
-    margin-bottom: 10px;
-    color: #666;
-}
-.footer-nav-a{
-    padding: 0 20px;
-    border-right: 1px solid #fff;
-    color: #fff;
-}
-.footer-nav-a:last-child{
-    border: none;
+    height: 100px;
+    line-height: 100px;
 }

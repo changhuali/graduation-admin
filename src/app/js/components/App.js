@@ -13,9 +13,9 @@ import 'antd/lib/index.css';
 
 import '../../css/reset.css';
 import '../../css/header.css';
+import '../../css/main.css';
 import '../../css/footer.css';
 import '../../css/user.css';
-import '../../css/index.css';
 
 class App extends Component {
     constructor(props){
@@ -46,7 +46,7 @@ class App extends Component {
                 <div>
                     <Header {...this.props} />
                 </div>
-                <div>
+                <div className="main">
                     {React.cloneElement(this.props.children, Object.assign({}, this.props, {hideNav: this.hideNav.bind(this)}))}
                 </div>
                 <div>

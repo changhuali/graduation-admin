@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import logo from '../../../images/logo.jpg';
 
 export default class Header extends Component {
     constructor(props){
@@ -7,7 +8,7 @@ export default class Header extends Component {
         this.state={
         }
     }
-    
+
     componentDidMount() {
 
     }
@@ -16,7 +17,10 @@ export default class Header extends Component {
         return(
             <div className="header-wrap">
                 <div className="header clearfix">
-
+                    <div className="header-logo">
+                        <img className="img_full" src={logo} />
+                    </div>
+                    <div className="header-user">{this.props.user.info.userName}</div>
                 </div>
             </div>
         )
