@@ -88,7 +88,7 @@ export function applyAction(params) {
         .end((err, resp) => {
             interceptorAction(err, resp);
             if(resp.ok) {
-                message.success(resp.body.message);
+                message.success(resp.body.message, 3);
                 HttpRequest
                 .get('/api/apply/getApplyList')
                 .end((err, resp) => {
@@ -99,7 +99,7 @@ export function applyAction(params) {
                     })
                 })
             }else{
-                message.error(resp.body.message);
+                message.error(resp.body.message, 3);
             }
             dispatch({
                 type: APPLY_ACTION,
