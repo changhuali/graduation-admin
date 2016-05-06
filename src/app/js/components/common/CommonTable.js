@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { Menu, Dropdown, Icon } from 'antd';
+import { Menu, Dropdown, Icon, Pagination } from 'antd';
 
 export default class CommonTable extends Component{
     constructor(props) {
         super(props);
         this.state={
+            current: 1,
+            pageSize: 10,
         }
+    }
+
+    getCurrData() {
+        return this.props.data.item.slice((this.state.current-1)*this.state.pageSize, this.state.current*this.state.pageSize);
     }
 
     createMenuList(valueObj) {
@@ -27,15 +33,22 @@ export default class CommonTable extends Component{
         return list;
     }
 
+    changePage(value) {
+        this.setState({
+            current: value,
+        })
+    }
+
     createItem() {
         var thead = [];
         var tbody = [];
+        var itemData = this.getCurrData();
         this.props.data.config.map((obj, idx) => {
             thead.push(
                 <th key={'row'+idx} style={{width: obj.width*10+'%'}}>{obj.dictKey}</th>
             );
         });
-        this.props.data.item.map((valueObj, i) => {
+        itemData.map((valueObj, i) => {
             const actionsMenu = (
               <Menu>
                 {this.createMenuList(valueObj)}
@@ -78,9 +91,20 @@ export default class CommonTable extends Component{
     }
 
     render(){
+        var data = this.getCurrData();
         return(
-            <div className="common-table">
-                {this.createItem()}
+            <div>
+                <div className="common-table">
+                    {this.createItem()}
+                </div>
+                <div style={{marginTop: '20px'}}>
+                    <Pagination
+                        onChange={this.changePage.bind(this)}
+                        defaultCurrent={1}
+                        current={this.state.current}
+                        pageSize={this.state.pageSize}
+                        total={this.props.data.item['length']} />
+                </div>
             </div>
         )
     }
