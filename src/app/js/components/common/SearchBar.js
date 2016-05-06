@@ -31,6 +31,12 @@ export default class SearchInput extends Component {
         return value.replace(/(^\s*)|(\s*$)/, "");
     }
 
+    enterToSearch(e) {
+        if(e.keyCode == 13) {
+            this.search();
+        }
+    }
+
     render() {
         return (
             <div className="searchInput-wrap">
@@ -38,6 +44,7 @@ export default class SearchInput extends Component {
                     <input className="search-input"
                         onChange={this.onChange.bind(this)}
                         onFocus={this.onFocus.bind(this)}
+                        onKeyUp={this.enterToSearch.bind(this)}
                         value={this.state.searchInput}
                         {...this.props} />
                     <button onClick={this.search.bind(this)} className="search-btn"><Icon type="search"/></button>

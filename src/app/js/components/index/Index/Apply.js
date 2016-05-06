@@ -39,7 +39,7 @@ export default class Apply extends Component{
     }
 
     getSearchList(value) {
-        console.log(value);
+        this.props.userBoundAc.getApplyList({keyword: value});
     }
 
     render(){
@@ -54,8 +54,8 @@ export default class Apply extends Component{
             item: this.state.data,
         };
         const operateConfig = [
-            {action: '改为已处理', handle: this.handleApply},
-            {action: '改为未处理', handle: this.ignoreApply},
+            {action: '改为已处理', handle: this.handleApply, disabledKey: 'applyStatus', disabledValue: '已处理'},
+            {action: '改为未处理', handle: this.ignoreApply, disabledKey: 'applyStatus', disabledValue: '未处理'},
         ];
         return(
             <div className="apply-wrap">

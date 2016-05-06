@@ -9,12 +9,14 @@ export default class CommonTable extends Component{
         }
     }
 
-    createMenuList(id) {
+    createMenuList(valueObj) {
         const list = [];
         this.props.operate.map((obj, idx) => {
+            var disabled = valueObj[obj.disabledKey] == obj.disabledValue ? true : false;
+            console.log(disabled,obj.disabledValue, idx);
             list.push(
-                <Menu.Item key={idx}>
-                    <a onClick={obj.handle.bind(this, id)}>
+                <Menu.Item key={idx} disabled={disabled}>
+                    <a onClick={obj.handle.bind(this, valueObj._id)}>
                       <i className="fa"></i>
                       &nbsp;&nbsp;
                       {obj.action}
@@ -36,7 +38,7 @@ export default class CommonTable extends Component{
         this.props.data.item.map((valueObj, i) => {
             const actionsMenu = (
               <Menu>
-                {this.createMenuList(valueObj._id)}
+                {this.createMenuList(valueObj)}
               </Menu>
             );
             var tr = [];

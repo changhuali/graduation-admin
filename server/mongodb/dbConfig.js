@@ -427,7 +427,8 @@ Model.apply = function(req, callback) {
 }
 // 获取申请列表
 Model.getApplyList = function(req, callback) {
-    Model.applyModel.find({}, function(err, data) {
+    var regExp = new RegExp(req.query.keyword);
+    Model.applyModel.find().or([{applyItem: regExp}, {applyName: regExp}, {applyPhone: regExp}, {applyStatus: regExp}]).exec(function(err, data) {
         console.log(data, '==========申请列表 data');
         if(err) {
             console.log(err);

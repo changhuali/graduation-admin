@@ -66,10 +66,11 @@ export function logout() {
         })
     }
 }
-export function getApplyList() {
+export function getApplyList(params) {
     return dispatch => {
         HttpRequest
         .get('/api/apply/getApplyList')
+        .query(params)
         .end((err, resp) => {
             var data = interceptorAction(err, resp);
             dispatch({
