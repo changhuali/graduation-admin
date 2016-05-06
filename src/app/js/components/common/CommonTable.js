@@ -9,8 +9,19 @@ export default class CommonTable extends Component{
         }
     }
 
-    createMenuList() {
+    createMenuList(id) {
         const list = [];
+        this.props.operate.map((obj, idx) => {
+            list.push(
+                <Menu.Item key={idx}>
+                    <a onClick={obj.handle.bind(this, id)}>
+                      <i className="fa"></i>
+                      &nbsp;&nbsp;
+                      {obj.action}
+                    </a>
+                </Menu.Item>
+            )
+        })
         return list;
     }
 

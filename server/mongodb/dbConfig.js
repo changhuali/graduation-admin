@@ -76,6 +76,7 @@ var applySchema = new mongoose.Schema({
     applyItem: String,
     applyName: String,
     applyPhone: String,
+    applyStatus: String,
 })
 
 //生成的Model对象
@@ -413,12 +414,37 @@ Model.getOnlineDemoList = function(req, callback) {
 
 //申请
 Model.apply = function(req, callback) {
-    Model.applyModel.create(req.body, function(err, data) {
+    var params = req.body;
+    params.applyStatus = "未处理";
+    Model.applyModel.create(params, function(err, data) {
         console.log(data, '==========申请 data');
         if(err) {
             console.log(err);
         }else{
             callback(200);
+        }
+    })
+}
+// 获取申请列表
+Model.getApplyList = function(req, callback) {
+    Model.applyModel.find({}, function(err, data) {
+        console.log(data, '==========申请列表 data');
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, data);
+        }
+    })
+}
+// 处理申请
+Model.applyAction = function(req, callback) {
+    var status = req.body.status == '未处理' ? '未处理' : '已处理';
+    Model.applyModel.update({_id: req.body.id}, {$set: {applyStatus: status}}, function(err, data) {
+        console.log(data, '处理申请后返回的数据');
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, status);
         }
     })
 }

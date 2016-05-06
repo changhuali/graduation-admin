@@ -378,5 +378,39 @@ router.post('/contact/apply', function(req, res) {
         }
     })
 })
+//获取申请列表
+router.get('/apply/getApplyList', function(req, res) {
+    Model.getApplyList(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+//处理申请
+router.put('/apply/action', function(req, res) {
+    Model.applyAction(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                message: '该申请已改为'+data+'状态',
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
 
 module.exports = router;

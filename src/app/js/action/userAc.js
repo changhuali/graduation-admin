@@ -2,6 +2,8 @@ export const LOGIN       = "LOGIN";
 export const CHECK_LOGIN = "CHECK_LOGIN";
 export const LOGOUT      = "LOGOUT";
 export const RESET_INFO  = "RESET_INFO";
+export const APPLY_ACTION = "APPLY_ACTION";
+export const GET_APPLY_LIST = "GET_APPLY_LIST";
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';
@@ -60,6 +62,48 @@ export function logout() {
             dispatch({
                 type: LOGOUT,
                 data: {}
+            })
+        })
+    }
+}
+export function getApplyList() {
+    return dispatch => {
+        HttpRequest
+        .get('/api/apply/getApplyList')
+        .end((err, resp) => {
+            var data = interceptorAction(err, resp);
+            dispatch({
+                type: GET_APPLY_LIST,
+                data: data,
+            })
+        })
+    }
+}
+
+export function applyAction(params) {
+    return dispatch => {
+        HttpRequest
+        .put('/api/apply/action')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success(resp.body.message);
+                HttpRequest
+                .get('/api/apply/getApplyList')
+                .end((err, resp) => {
+                    var data = interceptorAction(err, resp);
+                    dispatch({
+                        type: GET_APPLY_LIST,
+                        data: data,
+                    })
+                })
+            }else{
+                message.error(resp.body.message);
+            }
+            dispatch({
+                type: APPLY_ACTION,
+                data: resp.body,
             })
         })
     }

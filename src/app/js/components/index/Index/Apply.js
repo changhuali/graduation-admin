@@ -3,11 +3,26 @@ import { Link } from 'react-router';
 
 import SearchBar from  '../../common/SearchBar';
 import CommonTable from '../../common/CommonTable';
+import Loading from '../../common/Loading';
+import NotFound from '../../common/NotFound';
 
 export default class Apply extends Component{
     constructor(props) {
         super(props);
         this.state={
+            data: this.props.user.applyList.data,
+        }
+    }
+
+    componentDidMount() {
+        this.props.userBoundAc.getApplyList();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.user.applyList.data) {
+            this.setState({
+                data: nextProps.user.applyList.data,
+            })
         }
     }
 
@@ -16,11 +31,11 @@ export default class Apply extends Component{
     }
 
     handleApply(id) {
-        console.log(id);
+        this.props.userBoundAc.applyAction({id: id, status: '已处理'});
     }
 
     ignoreApply(id) {
-        console.log(id);
+        this.props.userBoundAc.applyAction({id: id, status: '未处理'});
     }
 
     getSearchList(value) {
@@ -36,17 +51,24 @@ export default class Apply extends Component{
                 {key: 'applyStatus', width: '2', dictKey: '处理状态'},
                 {key: 'operate', width: '2', dictKey: '操作', handle: this.operate},
             ],
-            item: DATA,
+            item: this.state.data,
         };
         const operateConfig = [
-            {action: '处理该请求', handle: this.handleApply},
-            {action: '忽略该请求', handle: this.ignoreApply},
+            {action: '改为已处理', handle: this.handleApply},
+            {action: '改为未处理', handle: this.ignoreApply},
         ];
         return(
             <div className="apply-wrap">
                 <div className="apply">
-                    <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} operate={operateConfig} />
-                    <CommonTable {...this.props} data={data} />
+                    <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
+                    {this.state.data == undefined ?
+                        <Loading />
+                    :
+                    this.state.data.length == 0 ?
+                        <NotFound />
+                    :
+                        <CommonTable {...this.props} data={data} operate={operateConfig} />
+                    }
                 </div>
             </div>
         )
