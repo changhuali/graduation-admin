@@ -109,3 +109,47 @@ export function applyAction(params) {
         })
     }
 }
+
+export function getContactList(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/contact/getContactList')
+        .query(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            dispatch({
+                type: GET_CONTACT_LIST,
+                data: resp.body,
+            })
+        })
+    }
+}
+
+export function contactAction(params) {
+    return dispatch => {
+        HttpRequest
+        .put('/api/contact/action')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success(resp.body.message, 3);
+                HttpRequest
+                .get('/api/contact/getContactList')
+                .end((err, resp) => {
+                    var data = interceptorAction(err, resp);
+                    dispatch({
+                        type: GET_CONTACT_LIST,
+                        data: data,
+                    })
+                })
+            }else{
+                message.error(resp.body.message, 3);
+            }
+            dispatch({
+                type: CONTACT_ACTION,
+                data: resp.body,
+            })
+        })
+    }
+}

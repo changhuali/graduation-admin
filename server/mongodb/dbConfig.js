@@ -27,6 +27,8 @@ var contactSchema = new mongoose.Schema({
     name: String,
     phone: String,
     advice: String,
+    status: String,
+    time: String,
 });
 
 //优惠活动collection Schema
@@ -77,6 +79,7 @@ var applySchema = new mongoose.Schema({
     applyName: String,
     applyPhone: String,
     applyStatus: String,
+    time: String,
 })
 
 //生成的Model对象
@@ -416,6 +419,8 @@ Model.getOnlineDemoList = function(req, callback) {
 Model.apply = function(req, callback) {
     var params = req.body;
     params.applyStatus = "未处理";
+    var date = new Date();
+    params.time = date.toLocaleString();
     Model.applyModel.create(params, function(err, data) {
         console.log(data, '==========申请 data');
         if(err) {
