@@ -30,11 +30,11 @@ export default class Contact extends Component{
         window.scrollTo(0, 0);
     }
 
-    handleApply(id) {
+    handleContact(id) {
         this.props.userBoundAc.contactAction({id: id, status: '已处理'});
     }
 
-    ignoreApply(id) {
+    ignoreContact(id) {
         this.props.userBoundAc.contactAction({id: id, status: '未处理'});
     }
 
@@ -55,8 +55,8 @@ export default class Contact extends Component{
             item: this.state.data,
         };
         const operateConfig = [
-            {action: '改为已处理', handle: this.handleApply, disabledKey: 'applyStatus', disabledValue: '已处理'},
-            {action: '改为未处理', handle: this.ignoreApply, disabledKey: 'applyStatus', disabledValue: '未处理'},
+            {action: '改为已处理', handle: this.handleContact, disabledKey: 'status', disabledValue: '已处理'},
+            {action: '改为未处理', handle: this.ignoreContact, disabledKey: 'status', disabledValue: '未处理'},
         ];
         return(
             <div className="apply-wrap">

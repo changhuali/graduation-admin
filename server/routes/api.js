@@ -307,6 +307,38 @@ router.get('/family/caseList', function(req, res) {
         }
     })
 })
+router.put('/family/editCaseItem', function(req, res) {
+    Model.editCaseItem(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                message: '删除信息成功',
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+router.delete('/family/delCaseItem', function(req, res) {
+    Model.delCaseItem(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
 
 //新闻资讯
 router.get('/imformation/newsList', function(req, res) {

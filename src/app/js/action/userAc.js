@@ -5,12 +5,14 @@ export const RESET_INFO  = "RESET_INFO";
 export const APPLY_ACTION = "APPLY_ACTION";
 export const GET_APPLY_LIST = "GET_APPLY_LIST";
 export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
+export const GET_CASE_LIST = "GET_CASE_LIST";
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';
 import {message} from 'antd';
 import __has from 'lodash/has';
 
+//登录
 export function login(params) {
     return dispatch => {
         HttpRequest
@@ -35,6 +37,7 @@ export function resetInfo() {
     }
 }
 
+//检查是否登录
 export function checkInfo () {
     return dispatch => {
         HttpRequest
@@ -49,6 +52,7 @@ export function checkInfo () {
     }
 }
 
+//退出
 export function logout() {
     return dispatch => {
         HttpRequest
@@ -67,6 +71,8 @@ export function logout() {
         })
     }
 }
+
+//处理申请
 export function getApplyList(params) {
     return dispatch => {
         HttpRequest
@@ -111,6 +117,7 @@ export function applyAction(params) {
     }
 }
 
+//处理联系
 export function getContactList(params) {
     return dispatch => {
         HttpRequest
@@ -151,6 +158,54 @@ export function contactAction(params) {
                 type: CONTACT_ACTION,
                 data: resp.body,
             })
+        })
+    }
+}
+
+//处理案例
+export function getCaseList(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/family/caseList')
+        .query(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            dispatch({
+                type: GET_CASE_LIST,
+                data: resp.body,
+            })
+        })
+    }
+}
+
+export function editCaseItem(params) {
+    return dispatch => {
+        HttpRequest
+        .put('/api/family/editCaseItem')
+        .send(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('已成功修改该信息');
+            }else{
+                message.warn(resp.body.message);
+            }
+        })
+    }
+}
+
+export function delCaseItem(params) {
+    return dispatch => {
+        HttpRequest
+        .del('/api/family/delCaseItem')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success('删除信息成功');
+                getCaseList({keyword: ""})(dispatch);
+            }else{
+                message.warn(resp.body.message);
+            }
         })
     }
 }

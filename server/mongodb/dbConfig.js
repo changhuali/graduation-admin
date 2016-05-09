@@ -360,12 +360,24 @@ Model.getPromotionList = function(req, callback) {
 //家装案列
 Model.getFamilyCaseList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
-    Model.familyCaseModel.find().or([{title: regExp}, {description: regExp}, {data: regExp}]).exec(function(err, data) {
+    Model.familyCaseModel.find().or([{title: regExp}, {description: regExp}]).exec(function(err, data) {
         console.log(data, '==========家装案列list data');
         if(err) {
             console.log(err);
         }else{
             callback(200, data);
+        }
+    })
+}
+Model.editCaseItem = function(req, callback) {
+}
+Model.delCaseItem = function(req, callback) {
+    Model.familyCaseModel.remove({_id: req.body.id}, function(err, data) {
+        console.log(data, '==========删除案列返回的data');
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200);
         }
     })
 }

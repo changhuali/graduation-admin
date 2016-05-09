@@ -19,7 +19,6 @@ export default class CommonTable extends Component{
         const list = [];
         this.props.operate.map((obj, idx) => {
             var disabled = valueObj[obj.disabledKey] == obj.disabledValue ? true : false;
-            console.log(disabled,obj.disabledValue, idx);
             list.push(
                 <Menu.Item key={idx} disabled={disabled}>
                     <a onClick={obj.handle.bind(this, valueObj._id)}>
