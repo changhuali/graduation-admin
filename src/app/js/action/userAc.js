@@ -4,6 +4,7 @@ export const LOGOUT      = "LOGOUT";
 export const RESET_INFO  = "RESET_INFO";
 export const APPLY_ACTION = "APPLY_ACTION";
 export const GET_APPLY_LIST = "GET_APPLY_LIST";
+export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';

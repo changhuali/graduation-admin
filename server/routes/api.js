@@ -413,4 +413,39 @@ router.put('/apply/action', function(req, res) {
     })
 })
 
+//获取联系信息列表
+router.get('/contact/getContactList', function(req, res) {
+    Model.getContactList(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+//处理联系
+router.put('/contact/action', function(req, res) {
+    Model.contactAction(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                message: '该联系信息已改为'+data+'状态',
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+
 module.exports = router;

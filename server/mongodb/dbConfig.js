@@ -302,10 +302,13 @@ Model.findPwd = function(req, callback) {
 
 //联系我们
 Model.contactUs = function(req, callback) {
+    var date = new Date();
     var obj = {
         name   : req.body.name,
         phone  : req.body.phone,
         advice : req.body.advice,
+        status : '未处理',
+        time   : date.toLocaleString(),
     };
     Model.contactModel.create(obj, function(err, data) {
         if(err) {
@@ -313,6 +316,31 @@ Model.contactUs = function(req, callback) {
         }else{
             console.log(data, '==========存储联系我们数据data');
             callback(200);
+        }
+    })
+}
+
+// 获取联系我们列表
+Model.getContactList = function(req, callback) {
+    var regExp = new RegExp(req.query.keyword);
+    Model.contactModel.find().or([{name: regExp}, {phone: regExp}, {advice: regExp}, {time: regExp}, {status: regExp}]).exec(function(err, data) {
+        console.log(data, '==========模糊匹配的联系列表 data');
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, data);
+        }
+    })
+}
+// 处理联系我们
+Model.contactAction = function(req, callback) {
+    var status = req.body.status == '未处理' ? '未处理' : '已处理';
+    Model.contactModel.update({_id: req.body.id}, {$set: {status: status}}, function(err, data) {
+        console.log(data, '处理联系后返回的数据');
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, status);
         }
     })
 }
