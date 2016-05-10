@@ -209,3 +209,19 @@ export function delCaseItem(params) {
         })
     }
 }
+
+export function postImgFile(params) {
+    return dispatch => {
+        HttpRequest
+        .post('/api/family/postCaseImg')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success('提交成功');
+            }else{
+                message.warn("---");
+            }
+        })
+    }
+}

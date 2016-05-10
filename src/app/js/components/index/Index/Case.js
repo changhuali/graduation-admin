@@ -1,17 +1,36 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, routerShape } from 'react-router';
 
 import SearchBar from  '../../common/SearchBar';
 import CommonTable from '../../common/CommonTable';
+import CaseForm from '../../common/CaseForm';
 import Loading from '../../common/Loading';
 import NotFound from '../../common/NotFound';
 
-export default class Contact extends Component{
+import { Button } from "antd";
+
+export default class Case extends Component{
     constructor(props) {
         super(props);
         this.state={
             data: this.props.user.caseList.data,
         }
+    }
+
+    handleEdit(id) {
+        console.log(111);
+    }
+
+    handleDelete(id) {
+        this.props.userBoundAc.delCaseItem({id: id});
+    }
+
+    getSearchList(value) {
+        this.props.userBoundAc.getCaseList({keyword: value});
+    }
+
+    addCaseItem() {
+        this.context.router.push({pathname: '/case', query: {addItem: 'true'}});
     }
 
     componentDidMount() {
@@ -30,17 +49,6 @@ export default class Contact extends Component{
         window.scrollTo(0, 0);
     }
 
-    handleEdit(id) {
-        console.log(111);
-    }
-
-    handleDelete(id) {
-        this.props.userBoundAc.delCaseItem({id: id});
-    }
-
-    getSearchList(value) {
-        this.props.userBoundAc.getCaseList({keyword: value});
-    }
 
     render(){
         var data = {
@@ -58,18 +66,29 @@ export default class Contact extends Component{
         ];
         return(
             <div className="apply-wrap">
-                <div className="apply">
-                    <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
-                    {this.state.data == undefined ?
-                        <Loading />
+                {this.props.location.query.addItem == "true" ?
+                    <div className="apply">
+                        <CaseForm {...this.props} />
+                    </div>
                     :
-                    this.state.data.length == 0 ?
-                        <NotFound />
-                    :
-                        <CommonTable {...this.props} data={data} operate={operateConfig} />
-                    }
-                </div>
+                    <div className="apply">
+                        <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
+                        <Button onClick={this.addCaseItem.bind(this)} style={{position: 'absolute', top: '45px', right: '0'}}>添加案例</Button>
+                        {this.state.data == undefined ?
+                            <Loading />
+                        :
+                        this.state.data.length == 0 ?
+                            <NotFound />
+                        :
+                            <CommonTable {...this.props} data={data} operate={operateConfig} />
+                        }
+                    </div>
+                }
             </div>
         )
     }
+}
+
+Case.contextTypes = {
+    router: routerShape.isRequired,
 }
