@@ -159,6 +159,7 @@ class Upload extends Component {
         super(props);
         this.state={
             filename: "",
+            imgUrl: "",
         }
     }
 
@@ -170,7 +171,14 @@ class Upload extends Component {
         this.setState({
             filename: e.target.files[0]['name'],
         });
-        this.props.userBoundAc.postImgFile(form);
+        // this.props.userBoundAc.postImgFile(form);
+        var reader = new FileReader();
+        reader.readAsDataURL(fileObj);
+        reader.onload = (e) => {
+            this.setState({
+                imgUrl: reader.result,
+            })
+        }
     }
 
     render() {
@@ -180,6 +188,7 @@ class Upload extends Component {
                     <input id={this.props.id} className="upload-input" type="file" onChange={this.textChange.bind(this)} />
                     <span>{this.state.filename == "" ? "上传图片" : this.state.filename}</span>
                 </a>
+                {this.state.imgUrl != "" ? <img style={{width: '72px', height: '100%'}} src={this.state.imgUrl} />:""}
             </div>
         )
     }

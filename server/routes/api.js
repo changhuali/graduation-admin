@@ -1,6 +1,9 @@
 var express  = require('express');
 var alidayu  = require('../alidayu/test');
 var router   = express.Router();
+var path     = require('path');
+var fs       = require('fs');
+var formidable = require('formidable');
 var dbConfig = require('../mongodb/dbConfig');
 var Model    = dbConfig.Model;
 var userModel = Model.userModel;
@@ -31,7 +34,6 @@ router.post('/client/login', function(req, res){
 })
 //保存用户信息到cookie
 router.get('/client/info', function(req, res){
-    console.log(req.cookies, "==========获取到的客户端cookie");
     if(req.cookies.info) {
         res.statusCode = 200;
         res.send(req.cookies.info);
@@ -80,7 +82,6 @@ function createCheckCode(len) {
     for(var i = 1; i <= len; i++) {
         str = str + Math.floor(10*Math.random());
     }
-    console.log(len, str, "==========生成验证码");
     return str;
 }
 
@@ -109,11 +110,9 @@ function getCheckCode(phoneNum, checkCode, type, callback) {
         'sms_template_code': config[type]['sms_template_code']
     }, function(error, response) {
         if (!error) {
-            console.log(response, "==========获取阿里验证码");
             Model.saveCheckCode(phoneNum, checkCode, callback);
         }else {
             callback(500);
-            console.log(error, '==========获取阿里验证码失败');
         };
     })
 }
@@ -122,7 +121,6 @@ function checkCodeRoute(req, res) {
     var phoneNum = req.body.phone;
     var checkCode = createCheckCode(4);
     var type = req.body.type;
-    console.log(type, '=====type');
     console.log(req.body, '===req');
     getCheckCode(phoneNum, checkCode, type, function(status) {
         if(status == 200){
@@ -200,7 +198,6 @@ router.post('/user/changeName', function(req, res) {
                 errorCode: 500,
                 message: '服务器内部错误',
             })
-            console.log('==========更改用户名失败->服务器错误');
         }
     });
 })
@@ -478,6 +475,17 @@ router.put('/contact/action', function(req, res) {
             })
         }
     })
+})
+
+router.post('/family/postCaseImg', function(req, res){
+    var form = new formidable.IncomingForm();
+    var dir = path.join(__dirname, '../../uploadFile/');
+    form.uploadDir = dir;
+    form.keepExtensions = true;
+    form.maxFieldsSize = 2 * 1024 * 1024;
+    form.parse(req, function(err, fields, files) {
+        fs.rename(files.file.path, './'+files.file.name);
+    });
 })
 
 module.exports = router;

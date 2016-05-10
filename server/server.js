@@ -19,12 +19,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 //动态刷新cookie时间
 app.use(function(req, res, next) {
-    console.log(req.cookies, req.url, '===');
     if(req.cookies.info) {
         res.cookie('info', req.cookies.info, {maxAge: 30*60*1000});
     }
     if(req.url != '/login' && req.url != '/api/client/login' && !req.cookies.info){
-        console.log('====');
         return res.redirect('/login');
     }
     next();
@@ -60,7 +58,6 @@ app.use(function(req, res, next){
 
 //监听端口
 var server = app.listen(8001, function(){
-    console.log(path.join(__dirname, '../src/app/'));
     var host = server.address().address;
     var port = server.address().port;
     console.log("graduation.test listening at http://%s:%s", host, port);

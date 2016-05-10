@@ -97,7 +97,6 @@ var Model = {
 //用户登录
 Model.login = function(req, callback) {
     Model.userModel.findOne({phone: req.body.phone},function(err, data){
-        console.log(data, "==========登录查询到的数据");
         if(err){
             console.log(err);
         }else{
@@ -118,7 +117,6 @@ Model.regist = function(req, callback) {
         var phoneNum = req.body.phone;
         var checkCode= req.body.checkCode;
         Model.checkCodeModel.findOne({phone: phoneNum}, function(err, data){
-            console.log(data, "==========查询数据库是否存有phone验证码");
             if(err){
                 console.log(err);
             }else if(data == null){
@@ -126,7 +124,6 @@ Model.regist = function(req, callback) {
             }else if(checkCode == data.checkCode) {
                 //验证手机是否已经注册
                 Model.userModel.find({phone: phoneNum}, function(err, data){
-                    console.log(data, "==========查询手机号码是否已经注册");
                     if(err){
                         console.log(err);
                     }else if(data instanceof Array && data.length > 0){
@@ -134,7 +131,6 @@ Model.regist = function(req, callback) {
                     }else{
                         //保存用户信息到数据库
                         Model.userModel.create({userName: userName, phone: phoneNum, userPwd: req.body.userPwd}, function(err, data){
-                            console.log(data, "==========注册存库");
                             if(err){
                                 console.log(err);
                             }else{
@@ -161,7 +157,6 @@ Model.saveCheckCode = function(phone, checkCode, callback) {
                 if(err){
                     console.log(err);
                 }else{
-                    console.log(data, '==========验证码存库数据');
                     Model.checkCodeModel.create({phone: phone, checkCode: checkCode}, function(err, data){
                         if(err){
                             console.log(err);
@@ -182,7 +177,6 @@ Model.checkBePwd = function(req, callback) {
         if(err) {
             console.log(err);
         }else{
-            console.log(data, '==========验证用户原密码数据');
             if(data == null || (data instanceof Array && data.length == 0)) {
                 callback(404001);
             }else if(data.userPwd == pwd){
@@ -238,7 +232,6 @@ Model.changePhone = function(req, callback) {
     if(req.cookies.checkCode) {
         console.log(befPhone);
         Model.checkCodeModel.findOne({phone: befPhone}, function(err, data) {
-            console.log(data, '==========数据库查询验证码');
             if(err){
                 console.log(err);
             }else{
@@ -267,7 +260,6 @@ Model.findPwd = function(req, callback) {
     var checkCode = req.body.checkCode;
     var newPwd = req.body.newPwd;
     Model.userModel.findOne({phone: phone}, function(err, data) {
-        console.log(data, '==========查询手机号码是否正确');
         if(err){
             console.log(err);
         }else{
@@ -276,7 +268,6 @@ Model.findPwd = function(req, callback) {
             }else{
                 var id = data._id;
                 Model.checkCodeModel.findOne({phone: phone}, function(err, data){
-                    console.log(data, '==========查询数据库验证码');
                     if(err) {
                         console.log(err);
                     }else{
@@ -314,7 +305,6 @@ Model.contactUs = function(req, callback) {
         if(err) {
             console.log(err);
         }else{
-            console.log(data, '==========存储联系我们数据data');
             callback(200);
         }
     })
@@ -324,7 +314,6 @@ Model.contactUs = function(req, callback) {
 Model.getContactList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.contactModel.find().or([{name: regExp}, {phone: regExp}, {advice: regExp}, {time: regExp}, {status: regExp}]).exec(function(err, data) {
-        console.log(data, '==========模糊匹配的联系列表 data');
         if(err) {
             console.log(err);
         }else{
@@ -336,7 +325,6 @@ Model.getContactList = function(req, callback) {
 Model.contactAction = function(req, callback) {
     var status = req.body.status == '未处理' ? '未处理' : '已处理';
     Model.contactModel.update({_id: req.body.id}, {$set: {status: status}}, function(err, data) {
-        console.log(data, '处理联系后返回的数据');
         if(err) {
             console.log(err);
         }else{
@@ -348,7 +336,6 @@ Model.contactAction = function(req, callback) {
 //优惠活动
 Model.getPromotionList = function(req, callback) {
     Model.promotionModel.find({}, function(err, data) {
-        console.log(data, '==========优惠活动list data');
         if(err) {
             console.log(err);
         }else{
@@ -361,7 +348,6 @@ Model.getPromotionList = function(req, callback) {
 Model.getFamilyCaseList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.familyCaseModel.find().or([{title: regExp}, {description: regExp}]).exec(function(err, data) {
-        console.log(data, '==========家装案列list data');
         if(err) {
             console.log(err);
         }else{
@@ -373,7 +359,6 @@ Model.editCaseItem = function(req, callback) {
 }
 Model.delCaseItem = function(req, callback) {
     Model.familyCaseModel.remove({_id: req.body.id}, function(err, data) {
-        console.log(data, '==========删除案列返回的data');
         if(err) {
             console.log(err);
         }else{
@@ -386,7 +371,6 @@ Model.delCaseItem = function(req, callback) {
 Model.getImformationList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.imformationModel.find({}, function(err, data) {
-        console.log(data, '==========资讯中心list data');
         if(err) {
             console.log(err);
         }else{
@@ -401,7 +385,6 @@ Model.getImformationList = function(req, callback) {
                 }
             })
             Model.imformationModel.find().or([{title: regExp}, {time: regExp}, {desc: regExp}, {type: regExp}]).exec(function(err, newData) {
-                console.log(data, '==========资讯中心模糊匹配list data');
                 if(err) {
                     console.log(err);
                 }else{
@@ -425,7 +408,6 @@ Model.getImformationList = function(req, callback) {
 //新闻浏览数添加
 Model.addImformationNum = function(req, callback) {
     Model.imformationModel.findOne({_id: req.body._id}, function(err, data) {
-        console.log(data, '==========资讯中心 num data');
         if(err) {
             console.log(err);
         }else{
@@ -446,7 +428,6 @@ Model.addImformationNum = function(req, callback) {
 Model.getOnlineDemoList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.onlineDemoModel.find().or([{title: regExp}, {space: regExp}, {part: regExp}, {style: regExp}]).exec(function(err, data) {
-        console.log(data, '==========装修效果图list data');
         if(err) {
             console.log(500);
         }else{
@@ -462,7 +443,6 @@ Model.apply = function(req, callback) {
     var date = new Date();
     params.time = date.toLocaleString();
     Model.applyModel.create(params, function(err, data) {
-        console.log(data, '==========申请 data');
         if(err) {
             console.log(err);
         }else{
@@ -474,7 +454,6 @@ Model.apply = function(req, callback) {
 Model.getApplyList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.applyModel.find().or([{applyItem: regExp}, {applyName: regExp}, {applyPhone: regExp}, {applyStatus: regExp}]).exec(function(err, data) {
-        console.log(data, '==========申请列表 data');
         if(err) {
             console.log(err);
         }else{
@@ -486,7 +465,6 @@ Model.getApplyList = function(req, callback) {
 Model.applyAction = function(req, callback) {
     var status = req.body.status == '未处理' ? '未处理' : '已处理';
     Model.applyModel.update({_id: req.body.id}, {$set: {applyStatus: status}}, function(err, data) {
-        console.log(data, '处理申请后返回的数据');
         if(err) {
             console.log(err);
         }else{
