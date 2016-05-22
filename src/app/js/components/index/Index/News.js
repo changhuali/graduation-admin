@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
 import SearchBar from  '../../common/SearchBar';
 import CommonTable from '../../common/CommonTable';
@@ -18,12 +17,16 @@ export default class News extends Component{
         this.props.userBoundAc.getNewsList({keyword: value});
     }
 
-    handleApply(id) {
-        this.props.userBoundAc.applyAction({id: id, status: '已处理'});
+    view(id) {
+        this.context.router.push({pathname: '/operateNews', query: {type: 'view', id: id}});
     }
 
-    ignoreApply(id) {
-        this.props.userBoundAc.applyAction({id: id, status: '未处理'});
+    edit(id) {
+        console.log(id);
+    }
+
+    delete(id) {
+        console.log(id);
     }
 
     componentDidMount() {
@@ -49,14 +52,14 @@ export default class News extends Component{
                 {key: 'type', width: '2', dictKey: '类别'},
                 {key: 'time', width: '2', dictKey: '时间'},
                 {key: 'viewNum', width: '2', dictKey: '查看次数'},
-                {key: 'operate', width: '2', dictKey: '操作', handle: this.operate},
+                {key: 'operate', width: '2', dictKey: '操作'},
             ],
             item: this.state.data,
         };
         const operateConfig = [
-            {action: '查看', handle: this.handleApply, disabledKey: 'applyStatus', disabledValue: '已处理'},
-            {action: '编辑', handle: this.handleApply, disabledKey: 'applyStatus', disabledValue: '已处理'},
-            {action: '删除', handle: this.ignoreApply, disabledKey: 'applyStatus', disabledValue: '未处理'},
+            {action: '查看', handle: this.view},
+            {action: '编辑', handle: this.edit},
+            {action: '删除', handle: this.delete},
         ];
         return(
             <div className="apply-wrap">

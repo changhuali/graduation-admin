@@ -100,7 +100,7 @@ var Model = {
 
 //用户登录
 Model.login = function(req, callback) {
-    Model.adminModel.findOne({phone: req.body.phone},function(err, data){
+    Model.adminModel.findOne({userName: req.body.userName},function(err, data){
         console.log(data, "==========登录查询到的数据");
         if(err){
             console.log(err);

@@ -18,12 +18,16 @@ export default class Render extends Component{
         this.props.userBoundAc.getOnlineDemoList({keyword: value});
     }
 
-    handleApply(id) {
-        this.props.userBoundAc.applyAction({id: id, status: '已处理'});
+    view(id) {
+        console.log(id);
     }
 
-    ignoreApply(id) {
-        this.props.userBoundAc.applyAction({id: id, status: '未处理'});
+    edit(id) {
+        console.log(id);
+    }
+
+    delete(id) {
+        console.log(id);
     }
 
     componentDidMount() {
@@ -49,14 +53,14 @@ export default class Render extends Component{
                 {key: 'space', width: '2', dictKey: '空间'},
                 {key: 'part', width: '2', dictKey: '局部'},
                 {key: 'style', width: '2', dictKey: '风格'},
-                {key: 'operate', width: '2', dictKey: '操作', handle: this.operate},
+                {key: 'operate', width: '2', dictKey: '操作'},
             ],
             item: this.state.data,
         };
         const operateConfig = [
-            {action: '查看', handle: this.handleApply, disabledKey: 'applyStatus', disabledValue: '已处理'},
-            {action: '编辑', handle: this.handleApply, disabledKey: 'applyStatus', disabledValue: '已处理'},
-            {action: '删除', handle: this.ignoreApply, disabledKey: 'applyStatus', disabledValue: '未处理'},
+            {action: '查看', handle: this.view},
+            {action: '编辑', handle: this.edit},
+            {action: '删除', handle: this.delete},
         ];
         return(
             <div className="apply-wrap">

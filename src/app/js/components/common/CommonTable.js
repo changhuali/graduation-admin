@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { routerShape } from 'react-router';
 import { Menu, Dropdown, Icon, Pagination } from 'antd';
 
 export default class CommonTable extends Component{
@@ -19,7 +19,7 @@ export default class CommonTable extends Component{
         const list = [];
         if (this.props.operate) {
             this.props.operate.map((obj, idx) => {
-                var disabled = valueObj[obj.disabledKey] == obj.disabledValue ? true : false;
+                var disabled = (valueObj[obj.disabledKey] == obj.disabledValue && obj.disabledValue) ? true : false;
                 list.push(
                     <Menu.Item key={idx} disabled={disabled}>
                     <a onClick={obj.handle.bind(this, valueObj._id)}>
@@ -109,4 +109,7 @@ export default class CommonTable extends Component{
             </div>
         )
     }
+}
+CommonTable.contextTypes = {
+    router: routerShape.isRequired,
 }

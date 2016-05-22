@@ -11,11 +11,11 @@ export default class Login extends Component {
         this.state={
             logining: false,
             loginObj: {
-                phone: "",
+                userName: "",
                 userPwd: "",
             },
             message: {
-                phone: "",
+                userName: "",
                 userPwd: "",
             }
         }
@@ -30,7 +30,7 @@ export default class Login extends Component {
 
     checkForm(e) {
         if(__FORMCHECK__.isEmpty(e.target.value)) {
-            var msg = e.target.name == "phone" ? "用户名不能为空" : "密码不能为空";
+            var msg = e.target.name == "userName" ? "用户名不能为空" : "密码不能为空";
             this.setState({
                 message: __assign(this.state.message, {[e.target.name]: msg}),
             })
@@ -45,16 +45,16 @@ export default class Login extends Component {
 
     login(e) {
         e.preventDefault();
-        var phone = this.state.loginObj.phone;
+        var userName = this.state.loginObj.userName;
         var pwd      = this.state.loginObj.userPwd;
-        if(!__FORMCHECK__.isEmpty(phone) && !__FORMCHECK__.isEmpty(pwd)){
+        if(!__FORMCHECK__.isEmpty(userName) && !__FORMCHECK__.isEmpty(pwd)){
             this.setState({
                 logining: true,
             })
             this.props.userBoundAc.login(this.state.loginObj);
         }else{
             Object.keys(this.state.loginObj).map(key => {
-                var msg = key == "phone" ? "用户名不能为空" : "密码不能为空";
+                var msg = key == "userName" ? "用户名不能为空" : "密码不能为空";
                 if(this.state.loginObj[key] == "") {
                     this.setState({
                         message: Object.assign(this.state.message, {[key]: msg}),
@@ -92,14 +92,14 @@ export default class Login extends Component {
                 <h2 className="user-right-title">欢迎登录</h2>
                 <input className="user-right-user"
                     type='text'
-                    name="phone"
+                    name="userName"
                     onChange={this.setLoginParams.bind(this)}
                     onFocus={this.resetMessage.bind(this)}
                     onBlur={this.checkForm.bind(this)}
-                    value={this.state.loginObj.phone}
+                    value={this.state.loginObj.userName}
                     placeholder="用户名"
                     autoComplete="off" />
-                <p className="user-msg">{this.state.message.phone}</p>
+                <p className="user-msg">{this.state.message.userName}</p>
                 <input className="user-right-pwd"
                     type='password'
                     name="userPwd"
