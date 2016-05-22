@@ -48,11 +48,9 @@ export default class UserList extends Component{
                 {key: '_id', width: '2', dictKey: '用户Id'},
                 {key: 'userName', width: '2', dictKey: '用户名'},
                 {key: 'phone', width: '2', dictKey: '用户手机号码'},
-                // {key: 'operate', width: '2', dictKey: '操作', handle: this.operate},
             ],
             item: this.state.data,
         };
-        const operateConfig = [];
         return(
             <div className="apply-wrap">
                 <div className="apply">
@@ -63,7 +61,7 @@ export default class UserList extends Component{
                     this.state.data.length == 0 ?
                         <NotFound />
                     :
-                        <CommonTable {...this.props} data={data} operate={operateConfig} />
+                        <CommonTable {...this.props} data={data} />
                     }
                 </div>
             </div>

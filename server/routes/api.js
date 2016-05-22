@@ -428,4 +428,22 @@ router.put('/apply/action', function(req, res) {
     })
 })
 
+//获取资讯列表
+router.get('/news/getNewsList', function(req, res) {
+    Model.getNewsList(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+
 module.exports = router;

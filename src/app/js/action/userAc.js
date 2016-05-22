@@ -6,6 +6,7 @@ export const RESET_INFO  = "RESET_INFO";
 export const APPLY_ACTION = "APPLY_ACTION";
 export const GET_APPLY_LIST = "GET_APPLY_LIST";
 export const GET_ONLINEDEMO_LIST = 'GET_ONLINEDEMO_LIST';
+export const GET_NEWS_LIST = 'GET_NEWS_LIST';
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';
@@ -138,6 +139,20 @@ export function getOnlineDemoList(params) {
         .end((err, resp) => {
             dispatch({
                 type: GET_ONLINEDEMO_LIST,
+                data: resp.body,
+            })
+        })
+    }
+}
+
+export function getNewsList(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/news/getNewsList')
+        .query(params)
+        .end((err, resp) => {
+            dispatch({
+                type: GET_NEWS_LIST,
                 data: resp.body,
             })
         })

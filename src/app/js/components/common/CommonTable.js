@@ -17,19 +17,20 @@ export default class CommonTable extends Component{
 
     createMenuList(valueObj) {
         const list = [];
-        this.props.operate.map((obj, idx) => {
-            var disabled = valueObj[obj.disabledKey] == obj.disabledValue ? true : false;
-            console.log(disabled,obj.disabledValue, idx);
-            list.push(
-                <Menu.Item key={idx} disabled={disabled}>
+        if (this.props.operate) {
+            this.props.operate.map((obj, idx) => {
+                var disabled = valueObj[obj.disabledKey] == obj.disabledValue ? true : false;
+                list.push(
+                    <Menu.Item key={idx} disabled={disabled}>
                     <a onClick={obj.handle.bind(this, valueObj._id)}>
-                      <i className="fa"></i>
-                      &nbsp;&nbsp;
-                      {obj.action}
+                    <i className="fa"></i>
+                    &nbsp;&nbsp;
+                    {obj.action}
                     </a>
-                </Menu.Item>
-            )
-        })
+                    </Menu.Item>
+                )
+            })
+        }
         return list;
     }
 
@@ -50,9 +51,9 @@ export default class CommonTable extends Component{
         });
         itemData.map((valueObj, i) => {
             const actionsMenu = (
-              <Menu>
-                {this.createMenuList(valueObj)}
-              </Menu>
+                <Menu>
+                    {this.createMenuList(valueObj)}
+                </Menu>
             );
             var tr = [];
             this.props.data.config.map((keyObj, j) => {

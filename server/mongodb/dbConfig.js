@@ -230,5 +230,16 @@ Model.applyAction = function(req, callback) {
         }
     })
 }
+// 获取资讯列表
+Model.getNewsList = function(req, callback) {
+    var regExp = new RegExp(req.query.keyword);
+    Model.imformationModel.find().or([{title: regExp}, {type: regExp}, {time: regExp}, {desc: regExp}]).exec(function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, data);
+        }
+    })
+}
 
 module.exports = { Model };
