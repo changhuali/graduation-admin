@@ -37,10 +37,10 @@ export default class Index extends Component{
     }
 }
 var DATA = [
+    {key: '用户信息管理', link: '/user', color: 'rgb(34, 147, 113)'},
     {key: '申请列表管理', link: '/apply', color: 'rgb(86, 203, 143)'},
+    {key: '联系信息管理', link: '/contact', color: 'rgb(128, 96, 196)'},
     {key: '装修案例管理', link: '/case', color: 'rgb(71, 172, 91)'},
     {key: '效果图管理', link: '/render', color: 'rgba(111, 101, 176, 0.69)'},
     {key: '资讯管理', link: '/news', color: 'rgb(89, 199, 203)'},
-    {key: '优惠活动管理', link: '/promotion', color: 'rgb(34, 147, 113)'},
-    {key: '联系信息管理', link: '/contact', color: 'rgb(128, 96, 196)'},
 ];

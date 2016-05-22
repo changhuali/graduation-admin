@@ -29,6 +29,21 @@ router.post('/client/login', function(req, res){
         }
     });
 })
+//获取用户列表
+router.get('/client/userList', function(req, res){
+    Model.getUserList(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({data: data});
+        } else {
+            res.statusCode = 500;
+            res.sed({
+                errorCode: status,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
 //保存用户信息到cookie
 router.get('/client/info', function(req, res){
     console.log(req.cookies, "==========获取到的客户端cookie");

@@ -1,9 +1,11 @@
 export const LOGIN       = "LOGIN";
+export const GET_USER_LIST = 'GET_USER_LIST';
 export const CHECK_LOGIN = "CHECK_LOGIN";
 export const LOGOUT      = "LOGOUT";
 export const RESET_INFO  = "RESET_INFO";
 export const APPLY_ACTION = "APPLY_ACTION";
 export const GET_APPLY_LIST = "GET_APPLY_LIST";
+export const GET_ONLINEDEMO_LIST = 'GET_ONLINEDEMO_LIST';
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';
@@ -21,6 +23,24 @@ export function login(params) {
                type: LOGIN,
                data: data
             })
+        })
+    }
+}
+
+export function getUserList(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/client/userList')
+        .query(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                dispatch({
+                    type: GET_USER_LIST,
+                    data: resp.body,
+                })
+            } else {
+                message.warn('获取用户列表失败， 请重试', 3);
+            }
         })
     }
 }
@@ -104,6 +124,20 @@ export function applyAction(params) {
             }
             dispatch({
                 type: APPLY_ACTION,
+                data: resp.body,
+            })
+        })
+    }
+}
+
+export function getOnlineDemoList(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/onlineDemo/getOnlineDemoList')
+        .query(params)
+        .end((err, resp) => {
+            dispatch({
+                type: GET_ONLINEDEMO_LIST,
                 data: resp.body,
             })
         })
