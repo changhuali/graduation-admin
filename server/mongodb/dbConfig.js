@@ -33,6 +33,8 @@ var contactSchema = new mongoose.Schema({
     name: String,
     phone: String,
     advice: String,
+    status: String,
+    time: String,
 });
 
 //优惠活动collection Schema
@@ -83,6 +85,7 @@ var applySchema = new mongoose.Schema({
     applyName: String,
     applyPhone: String,
     applyStatus: String,
+    time: String,
 })
 
 //生成的Model对象
@@ -126,12 +129,51 @@ Model.getUserList = function(req, callback) {
         }
     })
 }
+//联系我们
+Model.contactUs = function(req, callback) {
+    var date = new Date();
+    var obj = {
+        name   : req.body.name,
+        phone  : req.body.phone,
+        advice : req.body.advice,
+        status : '未处理',
+        time   : date.toLocaleString(),
+    };
+    Model.contactModel.create(obj, function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200);
+        }
+    })
+}
 
+// 获取联系我们列表
+Model.getContactList = function(req, callback) {
+    var regExp = new RegExp(req.query.keyword);
+    Model.contactModel.find().or([{name: regExp}, {phone: regExp}, {advice: regExp}, {time: regExp}, {status: regExp}]).exec(function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, data);
+        }
+    })
+}
+// 处理联系我们
+Model.contactAction = function(req, callback) {
+    var status = req.body.status == '未处理' ? '未处理' : '已处理';
+    Model.contactModel.update({_id: req.body.id}, {$set: {status: status}}, function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, status);
+        }
+    })
+}
 
 //优惠活动
 Model.getPromotionList = function(req, callback) {
     Model.promotionModel.find({}, function(err, data) {
-        console.log(data, '==========优惠活动list data');
         if(err) {
             console.log(err);
         }else{
@@ -143,12 +185,22 @@ Model.getPromotionList = function(req, callback) {
 //家装案列
 Model.getFamilyCaseList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
-    Model.familyCaseModel.find().or([{title: regExp}, {description: regExp}, {data: regExp}]).exec(function(err, data) {
-        console.log(data, '==========家装案列list data');
+    Model.familyCaseModel.find().or([{title: regExp}, {description: regExp}]).exec(function(err, data) {
         if(err) {
             console.log(err);
         }else{
             callback(200, data);
+        }
+    })
+}
+Model.editCaseItem = function(req, callback) {
+}
+Model.delCaseItem = function(req, callback) {
+    Model.familyCaseModel.remove({_id: req.body.id}, function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200);
         }
     })
 }
@@ -157,7 +209,6 @@ Model.getFamilyCaseList = function(req, callback) {
 Model.getImformationList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.imformationModel.find({}, function(err, data) {
-        console.log(data, '==========资讯中心list data');
         if(err) {
             console.log(err);
         }else{
@@ -172,7 +223,6 @@ Model.getImformationList = function(req, callback) {
                 }
             })
             Model.imformationModel.find().or([{title: regExp}, {time: regExp}, {desc: regExp}, {type: regExp}]).exec(function(err, newData) {
-                console.log(data, '==========资讯中心模糊匹配list data');
                 if(err) {
                     console.log(err);
                 }else{
@@ -197,7 +247,6 @@ Model.getImformationList = function(req, callback) {
 Model.getOnlineDemoList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.onlineDemoModel.find().or([{title: regExp}, {space: regExp}, {part: regExp}, {style: regExp}]).exec(function(err, data) {
-        console.log(data, '==========装修效果图list data');
         if(err) {
             console.log(500);
         }else{
@@ -206,11 +255,25 @@ Model.getOnlineDemoList = function(req, callback) {
     })
 }
 
+//申请
+Model.apply = function(req, callback) {
+    var params = req.body;
+    params.applyStatus = "未处理";
+    var date = new Date();
+    params.time = date.toLocaleString();
+    Model.applyModel.create(params, function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200);
+        }
+    })
+}
+
 // 获取申请列表
 Model.getApplyList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
     Model.applyModel.find().or([{applyItem: regExp}, {applyName: regExp}, {applyPhone: regExp}, {applyStatus: regExp}]).exec(function(err, data) {
-        console.log(data, '==========申请列表 data');
         if(err) {
             console.log(err);
         }else{
@@ -222,7 +285,6 @@ Model.getApplyList = function(req, callback) {
 Model.applyAction = function(req, callback) {
     var status = req.body.status == '未处理' ? '未处理' : '已处理';
     Model.applyModel.update({_id: req.body.id}, {$set: {applyStatus: status}}, function(err, data) {
-        console.log(data, '处理申请后返回的数据');
         if(err) {
             console.log(err);
         }else{

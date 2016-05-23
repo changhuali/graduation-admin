@@ -8,12 +8,15 @@ export const GET_APPLY_LIST = "GET_APPLY_LIST";
 export const GET_ONLINEDEMO_LIST = 'GET_ONLINEDEMO_LIST';
 export const GET_NEWS_LIST = 'GET_NEWS_LIST';
 export const GET_NEWS_DETAIL = 'GET_NEWS_DETAIL';
+export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
+export const GET_CASE_LIST = "GET_CASE_LIST";
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';
 import {message} from 'antd';
 import __has from 'lodash/has';
 
+//登录
 export function login(params) {
     return dispatch => {
         HttpRequest
@@ -56,6 +59,7 @@ export function resetInfo() {
     }
 }
 
+//检查是否登录
 export function checkInfo () {
     return dispatch => {
         HttpRequest
@@ -70,6 +74,7 @@ export function checkInfo () {
     }
 }
 
+//退出
 export function logout() {
     return dispatch => {
         HttpRequest
@@ -88,6 +93,8 @@ export function logout() {
         })
     }
 }
+
+//处理申请
 export function getApplyList(params) {
     return dispatch => {
         HttpRequest
@@ -145,6 +152,21 @@ export function getOnlineDemoList(params) {
         })
     }
 }
+//处理联系
+export function getContactList(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/contact/getContactList')
+        .query(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            dispatch({
+                type: GET_CONTACT_LIST,
+                data: resp.body,
+            })
+        })
+    }
+}
 
 export function getNewsList(params) {
     return dispatch => {
@@ -154,6 +176,34 @@ export function getNewsList(params) {
         .end((err, resp) => {
             dispatch({
                 type: GET_NEWS_LIST,
+                data: resp.body,
+            })
+        })
+    }
+}
+export function contactAction(params) {
+    return dispatch => {
+        HttpRequest
+        .put('/api/contact/action')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success(resp.body.message, 3);
+                HttpRequest
+                .get('/api/contact/getContactList')
+                .end((err, resp) => {
+                    var data = interceptorAction(err, resp);
+                    dispatch({
+                        type: GET_CONTACT_LIST,
+                        data: data,
+                    })
+                })
+            }else{
+                message.error(resp.body.message, 3);
+            }
+            dispatch({
+                type: CONTACT_ACTION,
                 data: resp.body,
             })
         })
@@ -173,6 +223,21 @@ export function getNewsDetail(params) {
         })
     }
 }
+//处理案例
+export function getCaseList(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/family/caseList')
+        .query(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            dispatch({
+                type: GET_CASE_LIST,
+                data: resp.body,
+            })
+        })
+    }
+}
 
 export function updateNews(params) {
     return dispatch => {
@@ -184,6 +249,53 @@ export function updateNews(params) {
                 message.success('修改成功', 3);
             } else {
                 message.warn('修改失败', 3);
+            }
+        })
+    }
+}
+export function editCaseItem(params) {
+    return dispatch => {
+        HttpRequest
+        .put('/api/family/editCaseItem')
+        .send(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('已成功修改该信息');
+            }else{
+                message.warn(resp.body.message);
+            }
+        })
+    }
+}
+
+export function delCaseItem(params) {
+    return dispatch => {
+        HttpRequest
+        .del('/api/family/delCaseItem')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success('删除信息成功');
+                getCaseList({keyword: ""})(dispatch);
+            }else{
+                message.warn(resp.body.message);
+            }
+        })
+    }
+}
+
+export function postImgFile(params) {
+    return dispatch => {
+        HttpRequest
+        .post('/api/family/postCaseImg')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success('提交成功');
+            }else{
+                message.warn("---");
             }
         })
     }

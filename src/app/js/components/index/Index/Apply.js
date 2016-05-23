@@ -45,11 +45,12 @@ export default class Apply extends Component{
     render(){
         var data = {
             config: [
-                {key: 'applyItem', width: '2', dictKey: '申请项目'},
-                {key: 'applyName', width: '2', dictKey: '申请人称呼'},
-                {key: 'applyPhone', width: '2', dictKey: '申请人手机号码'},
-                {key: 'applyStatus', width: '2', dictKey: '处理状态'},
-                {key: 'operate', width: '2', dictKey: '操作', handle: this.operate},
+                {key: 'applyItem', width: '1.6', dictKey: '申请项目'},
+                {key: 'applyName', width: '1.6', dictKey: '申请人称呼'},
+                {key: 'applyPhone', width: '1.6', dictKey: '申请人手机号码'},
+                {key: 'time', width: '1.6', dictKey: '申请时间'},
+                {key: 'applyStatus', width: '1.6', dictKey: '处理状态'},
+                {key: 'operate', width: '1.6', dictKey: '操作', handle: this.operate},
             ],
             item: this.state.data,
         };

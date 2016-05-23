@@ -8,6 +8,8 @@ import {
     GET_ONLINEDEMO_LIST,
     GET_NEWS_LIST,
     GET_NEWS_DETAIL,
+    GET_CONTACT_LIST,
+    GET_CASE_LIST,
 } from '../action/userAc';
 
 export default function (state={
@@ -36,6 +38,10 @@ export default function (state={
             return Object.assign({}, state, {newsList: action.data});
         case GET_NEWS_DETAIL:
             return Object.assign({}, state, {newsDetail: action.data});
+        case GET_CONTACT_LIST:
+            return Object.assign({}, state, {contactList: action.data});
+        case GET_CASE_LIST:
+            return Object.assign({}, state, {caseList: action.data});
         default:
             return state;
 

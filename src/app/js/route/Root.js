@@ -5,6 +5,7 @@ import Login from '../components/user/Login';
 import Index from '../components/index/Index';
 import Apply from '../components/index/Index/Apply';
 import Case from '../components/index/Index/Case';
+import CaseForm from '../components/common/CaseForm';
 import Render from '../components/index/Index/Render';
 import News from '../components/index/Index/News';
 import OperateNews from '../components/index/Index/news/OperateNews';
@@ -17,6 +18,7 @@ var routes = (
         <Route path='login' component={Login} />
         <Route path='apply' component={Apply} />
         <Route path='case' component={Case} />
+        <Route path='case/addCaseItem' component={CaseForm} />
         <Route path='render' component={Render} />
         <Route path='news' component={News} />
         <Route path='operateNews' component={OperateNews} />

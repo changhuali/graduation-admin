@@ -12,6 +12,7 @@
     "cookie-parser": "^1.4.1",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
+    "formidable": "^1.0.17",
     "lodash": "^4.6.1",
     "mongoose": "^4.4.8",
     "path": "^0.12.7",
