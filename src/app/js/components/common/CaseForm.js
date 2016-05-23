@@ -20,137 +20,139 @@ export default class RenderForm extends Component{
 
     render() {
         return (
-            <Form horizontal>
-                列表页面数据
-                <FormItem
-                    id="control-textarea"
-                    label="案例标题："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Input  />
-                </FormItem>
+            <div className="apply">
+                <Form horizontal>
+                    列表页面数据
+                    <FormItem
+                        id="control-textarea"
+                        label="案例标题："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Input  />
+                    </FormItem>
 
-                <FormItem
-                    id="control-textarea"
-                    label="案例描述："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Input type="textarea" rows="3" />
-                </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="案例描述："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Input type="textarea" rows="3" />
+                    </FormItem>
 
-                <FormItem
-                    id="control-textarea"
-                    label="图1："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图1："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
 
-                <FormItem
-                    id="control-textarea"
-                    label="图2："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图2："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
 
-                <FormItem
-                    id="control-textarea"
-                    label="图3："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图3："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
 
-                <FormItem
-                    id="control-textarea"
-                    label="图4："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图4："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
 
-                <FormItem
-                    id="control-textarea"
-                    label="图5："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
-                详情页面数据
-                <FormItem
+                    <FormItem
+                        id="control-textarea"
+                        label="图5："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
+                    详情页面数据
+                    <FormItem
 
-                    label="描述："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Input placeholder="Please enter..." />
-                </FormItem>
-                <FormItem
-                    id="control-textarea"
-                    label="图片："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
-                <FormItem
+                        label="描述："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Input placeholder="Please enter..." />
+                    </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图片："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
+                    <FormItem
 
-                    label="描述："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Input placeholder="Please enter..." />
-                </FormItem>
-                <FormItem
-                    id="control-textarea"
-                    label="图片："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
-                <FormItem
+                        label="描述："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Input placeholder="Please enter..." />
+                    </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图片："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
+                    <FormItem
 
-                    label="描述："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Input placeholder="Please enter..." />
-                </FormItem>
-                <FormItem
-                    id="control-textarea"
-                    label="图片："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
-                <FormItem
+                        label="描述："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Input placeholder="Please enter..." />
+                    </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图片："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
+                    <FormItem
 
-                    label="描述："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Input placeholder="Please enter..." />
-                </FormItem>
-                <FormItem
-                    id="control-textarea"
-                    label="图片："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
-                <FormItem
+                        label="描述："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Input placeholder="Please enter..." />
+                    </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图片："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
+                    <FormItem
 
-                    label="描述："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Input placeholder="Please enter..." />
-                </FormItem>
-                <FormItem
-                    id="control-textarea"
-                    label="图片："
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 14 }}>
-                    <Upload {...this.props} />
-                </FormItem>
-                <Button>添加</Button>
-                <Button>重置</Button>
-              </Form>
+                        label="描述："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Input placeholder="Please enter..." />
+                    </FormItem>
+                    <FormItem
+                        id="control-textarea"
+                        label="图片："
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 14 }}>
+                        <Upload {...this.props} />
+                    </FormItem>
+                    <Button>添加</Button>
+                    <Button>重置</Button>
+                </Form>
+            </div>
         )
     }
 }

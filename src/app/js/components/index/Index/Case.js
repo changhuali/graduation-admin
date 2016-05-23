@@ -3,7 +3,6 @@ import { Link, routerShape } from 'react-router';
 
 import SearchBar from  '../../common/SearchBar';
 import CommonTable from '../../common/CommonTable';
-import CaseForm from '../../common/CaseForm';
 import Loading from '../../common/Loading';
 import NotFound from '../../common/NotFound';
 
@@ -30,7 +29,7 @@ export default class Case extends Component{
     }
 
     addCaseItem() {
-        this.context.router.push({pathname: '/case', query: {addItem: 'true'}});
+        this.context.router.push({pathname: '/case/addCaseItem'});
     }
 
     componentDidMount() {
@@ -66,24 +65,18 @@ export default class Case extends Component{
         ];
         return(
             <div className="apply-wrap">
-                {this.props.location.query.addItem == "true" ?
-                    <div className="apply">
-                        <CaseForm {...this.props} />
-                    </div>
+                <div className="apply">
+                    <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
+                    <Button onClick={this.addCaseItem.bind(this)} style={{position: 'absolute', top: '45px', right: '0'}}>添加案例</Button>
+                    {this.state.data == undefined ?
+                        <Loading />
                     :
-                    <div className="apply">
-                        <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
-                        <Button onClick={this.addCaseItem.bind(this)} style={{position: 'absolute', top: '45px', right: '0'}}>添加案例</Button>
-                        {this.state.data == undefined ?
-                            <Loading />
-                        :
-                        this.state.data.length == 0 ?
-                            <NotFound />
-                        :
-                            <CommonTable {...this.props} data={data} operate={operateConfig} />
-                        }
-                    </div>
-                }
+                    this.state.data.length == 0 ?
+                        <NotFound />
+                    :
+                        <CommonTable {...this.props} data={data} operate={operateConfig} />
+                    }
+                </div>
             </div>
         )
     }
