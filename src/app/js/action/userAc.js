@@ -202,10 +202,6 @@ export function contactAction(params) {
             }else{
                 message.error(resp.body.message, 3);
             }
-            dispatch({
-                type: CONTACT_ACTION,
-                data: resp.body,
-            })
         })
     }
 }

@@ -22,12 +22,6 @@ var userSchema = new mongoose.Schema({
     userPwd : String
 });
 
-//验证码collection Schema
-var checkCodeSchema = new mongoose.Schema({
-    phone: String,
-    checkCode : String
-});
-
 //联系我们collection Schema
 var contactSchema = new mongoose.Schema({
     name: String,
@@ -80,11 +74,10 @@ var onlineDemoSchema = new mongoose.Schema({
 
 //申请collection Schema
 var applySchema = new mongoose.Schema({
-    id: String,
     applyItem: String,
     applyName: String,
     applyPhone: String,
-    applyStatus: String,
+    status: String,
     time: String,
 })
 
@@ -92,7 +85,6 @@ var applySchema = new mongoose.Schema({
 var Model = {
     adminModel: db.model('admin', adminSchema, "admin"),
     userModel: db.model('user', userSchema, "user"),
-    checkCodeModel: db.model('checkCode', checkCodeSchema, "checkCode"),
     contactModel: db.model('contact', contactSchema, "contact"),
     promotionModel: db.model('promotion', promotionSchema, "promotion"),
     familyCaseModel: db.model('familyCase', familyCaseSchama, "familyCase"),
@@ -131,15 +123,7 @@ Model.getUserList = function(req, callback) {
 }
 //联系我们
 Model.contactUs = function(req, callback) {
-    var date = new Date();
-    var obj = {
-        name   : req.body.name,
-        phone  : req.body.phone,
-        advice : req.body.advice,
-        status : '未处理',
-        time   : date.toLocaleString(),
-    };
-    Model.contactModel.create(obj, function(err, data) {
+    Model.contactModel.create(req.body, function(err, data) {
         if(err) {
             console.log(err);
         }else{
@@ -255,21 +239,6 @@ Model.getOnlineDemoList = function(req, callback) {
     })
 }
 
-//申请
-Model.apply = function(req, callback) {
-    var params = req.body;
-    params.applyStatus = "未处理";
-    var date = new Date();
-    params.time = date.toLocaleString();
-    Model.applyModel.create(params, function(err, data) {
-        if(err) {
-            console.log(err);
-        }else{
-            callback(200);
-        }
-    })
-}
-
 // 获取申请列表
 Model.getApplyList = function(req, callback) {
     var regExp = new RegExp(req.query.keyword);
@@ -284,7 +253,7 @@ Model.getApplyList = function(req, callback) {
 // 处理申请
 Model.applyAction = function(req, callback) {
     var status = req.body.status == '未处理' ? '未处理' : '已处理';
-    Model.applyModel.update({_id: req.body.id}, {$set: {applyStatus: status}}, function(err, data) {
+    Model.applyModel.update({_id: req.body.id}, {$set: {status: status}}, function(err, data) {
         if(err) {
             console.log(err);
         }else{
@@ -309,7 +278,7 @@ Model.getNewsDetail = function(req, callback) {
     Model.imformationModel.findOne(params, function(err, data) {
         console.log(data, '资讯详情====================');
         if(err) {
-            console.log(err);
+            console.log(err);CONTACT_ACTION
         } else {
             callback(200, data);
         }

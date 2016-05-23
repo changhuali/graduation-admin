@@ -2,7 +2,6 @@ import {
     LOGIN,
     GET_USER_LIST,
     CHECK_LOGIN,
-    LOGOUT,
     RESET_INFO,
     GET_APPLY_LIST,
     GET_ONLINEDEMO_LIST,
@@ -18,6 +17,8 @@ export default function (state={
     applyList: {},
     onlineDemoList: {},
     newsDetail: {},
+    caseList: {},
+    contactList: {},
     newsList: {}}, action) {
     switch(action.type) {
         case LOGIN:
@@ -25,8 +26,6 @@ export default function (state={
         case GET_USER_LIST:
             return Object.assign({}, state, {userList: action.data});
         case CHECK_LOGIN:
-            return Object.assign({}, state, {info: action.data});
-        case LOGOUT:
             return Object.assign({}, state, {info: action.data});
         case RESET_INFO:
             return Object.assign({}, state, {info: action.data});

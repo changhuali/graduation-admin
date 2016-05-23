@@ -292,7 +292,7 @@ router.get('/news/getNewsDetail', function(req, res) {
             })
         }
     })
-}
+})
 
 //处理联系
 router.put('/contact/action', function(req, res) {
