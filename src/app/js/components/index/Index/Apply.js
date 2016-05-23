@@ -61,7 +61,7 @@ export default class Apply extends Component{
         return(
             <div className="apply-wrap">
                 <div className="apply">
-                    <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
+                    <SearchBar placeholder="请输入关键词" search={this.getSearchList.bind(this)} />
                     {this.state.data == undefined ?
                         <Loading />
                     :
