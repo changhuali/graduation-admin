@@ -347,7 +347,7 @@ router.post('/render/addRender', function(req, res){
 
 function storeImg(req, dirStr, callback) {
     var form = new formidable.IncomingForm();
-    var dir = path.join(__dirname, '../../../graduation-project/src/app/images/');
+    var dir = path.join(__dirname, '../../../graduation-project/src/app/images');
     form.uploadDir=__dirname;
     form.keepExtensions = true;
     form.maxFieldsSize = 2 * 1024 * 1024;
@@ -375,7 +375,7 @@ function storeImg(req, dirStr, callback) {
 }
 
 router.post('/family/postImgFile', function(req, res) {
-    storeImg(req, 'onlineDemo/', function(status, data) {
+    storeImg(req, '/onlineDemo/', function(status, data) {
         if(status == 200) {
             res.statusCode = 200;
             res.send({

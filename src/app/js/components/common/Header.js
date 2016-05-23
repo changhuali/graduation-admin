@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Menu, Dropdown, Icon } from 'antd';
-
+import logo from '../../../images/logo.jpg';
 export default class Header extends Component {
     constructor(props){
         super(props);
@@ -25,7 +25,7 @@ export default class Header extends Component {
             <div className="header-wrap">
                 <div className="header clearfix">
                     <div className="header-logo">
-                        <Link to='/'><img className="img_full" src="" /></Link>
+                        <Link to='/'><img className="img_full" src={logo} /></Link>
                     </div>
                     {this.props.user.info.id?
                     <div className="header-user">
