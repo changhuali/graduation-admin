@@ -59,3 +59,34 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+/*新闻*/
+.imformation-detail{
+    width: 970px;
+    margin: 0 auto;
+    padding: 40px 40px;
+    box-sizing: border-box;
+}
+.imformation-detail span{
+    margin-right: 40px;
+}
+.imformation-detail div{
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #eee;
+}
+.imformation-detail h2{
+    margin-bottom: 20px;
+    font-size: 25px;
+    color: #333;
+}
+.imformation-detail img{
+    display: block;
+    width: 500px;
+    margin: 30px auto;
+}
+.imformation-detail p{
+    text-indent: 2em;
+    margin-top: 10px;
+    line-height: 20px;
+    color: #333;
+}

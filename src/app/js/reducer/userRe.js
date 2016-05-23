@@ -7,9 +7,16 @@ import {
     GET_APPLY_LIST,
     GET_ONLINEDEMO_LIST,
     GET_NEWS_LIST,
+    GET_NEWS_DETAIL,
 } from '../action/userAc';
 
-export default function (state={info: {}, userList: {}, applyList: {}, onlineDemoList: {}, newsList: {}}, action) {
+export default function (state={
+    info: {},
+    userList: {},
+    applyList: {},
+    onlineDemoList: {},
+    newsDetail: {},
+    newsList: {}}, action) {
     switch(action.type) {
         case LOGIN:
             return Object.assign({}, state, {info: action.data});
@@ -27,6 +34,8 @@ export default function (state={info: {}, userList: {}, applyList: {}, onlineDem
             return Object.assign({}, state, {onlineDemoList: action.data});
         case GET_NEWS_LIST:
             return Object.assign({}, state, {newsList: action.data});
+        case GET_NEWS_DETAIL:
+            return Object.assign({}, state, {newsDetail: action.data});
         default:
             return state;
 

@@ -7,6 +7,7 @@ export const APPLY_ACTION = "APPLY_ACTION";
 export const GET_APPLY_LIST = "GET_APPLY_LIST";
 export const GET_ONLINEDEMO_LIST = 'GET_ONLINEDEMO_LIST';
 export const GET_NEWS_LIST = 'GET_NEWS_LIST';
+export const GET_NEWS_DETAIL = 'GET_NEWS_DETAIL';
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';
@@ -155,6 +156,35 @@ export function getNewsList(params) {
                 type: GET_NEWS_LIST,
                 data: resp.body,
             })
+        })
+    }
+}
+
+export function getNewsDetail(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/news/getNewsDetail')
+        .query(params)
+        .end((err, resp) => {
+            dispatch({
+                type: GET_NEWS_DETAIL,
+                data: resp.body,
+            })
+        })
+    }
+}
+
+export function updateNews(params) {
+    return dispatch => {
+        HttpRequest
+        .put('/api/news/updateNews')
+        .send(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('修改成功', 3);
+            } else {
+                message.warn('修改失败', 3);
+            }
         })
     }
 }

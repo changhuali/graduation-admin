@@ -241,5 +241,27 @@ Model.getNewsList = function(req, callback) {
         }
     })
 }
+Model.getNewsDetail = function(req, callback) {
+    var params = {_id: req.query.id};
+    console.log(params);
+    Model.imformationModel.findOne(params, function(err, data) {
+        console.log(data, '资讯详情====================');
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
+Model.updateNews = function(req, callback) {
+    var params = req.body;
+    Model.imformationModel.update({_id: params._id}, {$set: {title: params.title, content: params.content, type: params.type, desc: params.desc}}, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
 
 module.exports = { Model };

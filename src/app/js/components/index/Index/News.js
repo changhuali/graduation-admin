@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-
+import { routerShape } from 'react-router';
 import SearchBar from  '../../common/SearchBar';
 import CommonTable from '../../common/CommonTable';
 import Loading from '../../common/Loading';
 import NotFound from '../../common/NotFound';
+
+import {Button} from 'antd';
 
 export default class News extends Component{
     constructor(props) {
@@ -21,8 +23,12 @@ export default class News extends Component{
         this.context.router.push({pathname: '/operateNews', query: {type: 'view', id: id}});
     }
 
+    addNews() {
+        this.context.router.push({pathname: '/operateNews', query: {type: 'add'}});
+    }
+
     edit(id) {
-        console.log(id);
+        this.context.router.push({pathname: '/operateNews', query: {type: 'edit', id: id}});
     }
 
     delete(id) {
@@ -65,6 +71,7 @@ export default class News extends Component{
             <div className="apply-wrap">
                 <div className="apply">
                 <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
+                <Button onClick={this.addNews.bind(this)}>添加资讯</Button>
                 {this.state.data == undefined ?
                     <Loading />
                 :
@@ -77,4 +84,7 @@ export default class News extends Component{
             </div>
         )
     }
+}
+News.contextTypes = {
+    router: routerShape.isRequired,
 }
