@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { routerShape } from 'react-router';
+import {Button} from 'antd';
 
 import SearchBar from  '../../common/SearchBar';
 import CommonTable from '../../common/CommonTable';
@@ -19,15 +20,19 @@ export default class Render extends Component{
     }
 
     view(id) {
-        console.log(id);
+        this.context.router.push({pathname: '/operateRender', query: {type: 'view', id: id}});
+    }
+
+    addRender() {
+        this.context.router.push({pathname: '/operateRender', query: {type: 'add'}});
     }
 
     edit(id) {
-        console.log(id);
+        this.context.router.push({pathname: '/operateRender', query: {type: 'edit', id: id}});
     }
 
     delete(id) {
-        console.log(id);
+        this.props.userBoundAc.delRender({id: id});
     }
 
     componentDidMount() {
@@ -66,6 +71,7 @@ export default class Render extends Component{
             <div className="apply-wrap">
                 <div className="apply">
                 <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
+                <Button onClick={this.addRender.bind(this)} style={{position: 'absolute', top: '45px', right: '0'}}>添加效果图</Button>
                 {this.state.data == undefined ?
                     <Loading />
                 :
@@ -78,4 +84,7 @@ export default class Render extends Component{
             </div>
         )
     }
+}
+Render.contextTypes = {
+    router: routerShape.isRequired,
 }

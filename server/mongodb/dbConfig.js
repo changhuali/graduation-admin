@@ -70,6 +70,9 @@ var onlineDemoSchema = new mongoose.Schema({
     id: String,
     title: String,
     img: String,
+    space: String,
+    part: String,
+    style: String,
 })
 
 //申请collection Schema
@@ -291,6 +294,50 @@ Model.updateNews = function(req, callback) {
             console.log(err);
         } else {
             callback(200, data);
+        }
+    })
+}
+Model.getNewsDetail = function(req, callback) {
+    Model.onlineDemoModel.findOne({_id: req.query.id}, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
+
+Model.addRender = function(req, callback) {
+    Model.onlineDemoModel.create(req.body, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
+Model.editRender = function(req, callback) {
+    var params = req.body;
+    Model.onlineDemoModel.update({_id: params._id}, {$set: {
+        title: params.title,
+        space: params.space,
+        part: params.part,
+        style: params.style,
+        img: params.img,
+    }}, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
+Model.delRender = function(req, callback) {
+    Model.onlineDemoModel.remove({_id: req.body.id}, function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200);
         }
     })
 }

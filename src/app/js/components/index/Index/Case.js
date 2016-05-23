@@ -29,7 +29,7 @@ export default class Case extends Component{
     }
 
     addCaseItem() {
-        this.context.router.push({pathname: '/case/addCaseItem'});
+        this.context.router.push({pathname: 'operateCase', query: {type: 'add'}});
     }
 
     componentDidMount() {

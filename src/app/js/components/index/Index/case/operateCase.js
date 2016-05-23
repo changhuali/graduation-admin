@@ -15,7 +15,7 @@ export default class RenderForm extends Component{
         var data = new FormData();
         var node = document.getElementById(e.target.id);
         data.append('photo', node.files[0]);
-        console.log(node.files[0],data);
+        this.props.userBoundAc.postImgFile(data);
     }
 
     render() {

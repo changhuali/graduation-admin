@@ -5,8 +5,9 @@ import Login from '../components/user/Login';
 import Index from '../components/index/Index';
 import Apply from '../components/index/Index/Apply';
 import Case from '../components/index/Index/Case';
-import CaseForm from '../components/common/CaseForm';
+import operateCase from '../components/index/Index/case/operateCase';
 import Render from '../components/index/Index/Render';
+import OperateRender from '../components/index/Index/render/OperateRender';
 import News from '../components/index/Index/News';
 import OperateNews from '../components/index/Index/news/OperateNews';
 import User from '../components/index/Index/User';
@@ -18,8 +19,9 @@ var routes = (
         <Route path='login' component={Login} />
         <Route path='apply' component={Apply} />
         <Route path='case' component={Case} />
-        <Route path='case/addCaseItem' component={CaseForm} />
+        <Route path='operateCase' component={operateCase} />
         <Route path='render' component={Render} />
+        <Route path='operateRender' component={OperateRender} />
         <Route path='news' component={News} />
         <Route path='operateNews' component={OperateNews} />
         <Route path='user' component={User} />

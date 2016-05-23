@@ -71,7 +71,7 @@ export default class News extends Component{
             <div className="apply-wrap">
                 <div className="apply">
                 <SearchBar placeholder="请输入" search={this.getSearchList.bind(this)} />
-                <Button onClick={this.addNews.bind(this)}>添加资讯</Button>
+                <Button onClick={this.addNews.bind(this)} style={{position: 'absolute', top: '45px', right: '0'}}>添加资讯</Button>
                 {this.state.data == undefined ?
                     <Loading />
                 :

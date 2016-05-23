@@ -329,14 +329,129 @@ router.put('/news/updateNews', function(req, res) {
     })
 })
 
-router.post('/family/postCaseImg', function(req, res){
+router.post('/render/addRender', function(req, res){
+    Model.addRender(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        } else {
+            res.statusCode = 500;
+            res.send({
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+
+function storeImg(req, dirStr, callback) {
     var form = new formidable.IncomingForm();
-    var dir = path.join(__dirname, '../../uploadFile/');
-    form.uploadDir = dir;
+    var dir = path.join(__dirname, '../../../graduation-project/src/app/images/');
+    form.uploadDir=__dirname;
     form.keepExtensions = true;
     form.maxFieldsSize = 2 * 1024 * 1024;
     form.parse(req, function(err, fields, files) {
-        fs.rename(files.file.path, './'+files.file.name);
+        if(err) {
+            callback(500);
+        } else {
+            const type = files.img.name.split('.')[1];
+            var dirname = dir + dirStr;
+            const name = Date.now();
+            var newPath = dirname + name + '.' +type;
+            fs.exists(dirname, function(exists) {
+                if(exists) {
+                    fs.renameSync(files.img.path, newPath);
+                    callback(200, {img: dirStr + name + '.' +type});
+                } else {
+                    fs.mkdir(dir,function(error){
+                        fs.renameSync(files.img.path, newPath);
+                        callback(200, {img: dirStr + name + '.' +type});
+                    })
+                }
+            });
+        }
+    })
+}
+
+router.post('/family/postImgFile', function(req, res) {
+    storeImg(req, 'onlineDemo/', function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    });
+})
+
+router.get('/render/renderDetail', function(req, res) {
+    Model.getNewsDetail(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+router.delete('/render/delRender', function(req, res) {
+    Model.delRender(req, function(status) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                message: '删除成功',
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+router.put('/render/editRender', function(req, res) {
+    Model.editRender(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+router.delete('/delImg', function(req, res) {
+    var dir = path.join(__dirname, '../../../graduation-project/src/app/images/');
+    dir = dir + req.body.img;
+    console.log(dir);
+    fs.unlink(dir, function(err, data){
+        if(err) {
+            console.log(err);
+        } else {
+            res.statusCode = 200;
+            res.send({
+                message: '删除成功',
+            })
+        }
     });
 })
 

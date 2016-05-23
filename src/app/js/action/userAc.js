@@ -10,6 +10,9 @@ export const GET_NEWS_LIST = 'GET_NEWS_LIST';
 export const GET_NEWS_DETAIL = 'GET_NEWS_DETAIL';
 export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
 export const GET_CASE_LIST = "GET_CASE_LIST";
+export const GET_RENDER_DETAIL = "GET_RENDER_DETAIL";
+export const POST_IMG_FILE = 'POST_IMG_FILE';
+export const ADD_RENDER = 'ADD_RENDER';
 
 import HttpRequest from 'superagent';
 import interceptorAction from './interceptorAction';
@@ -284,14 +287,98 @@ export function delCaseItem(params) {
 export function postImgFile(params) {
     return dispatch => {
         HttpRequest
-        .post('/api/family/postCaseImg')
+        .post('/api/family/postImgFile')
         .send(params)
         .end((err, resp) => {
             interceptorAction(err, resp);
             if(resp.ok) {
-                message.success('提交成功');
+                dispatch({
+                    type: POST_IMG_FILE,
+                    data: resp.body,
+                })
             }else{
-                message.warn("---");
+                message.warn("图片上传失败");
+            }
+        })
+    }
+}
+
+export function getRenderDetail(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/render/renderDetail')
+        .query(params)
+        .end((err, resp) => {
+            dispatch({
+                type: GET_RENDER_DETAIL,
+                data: resp.body,
+            })
+        })
+    }
+}
+
+export function addRender(params) {
+    return dispatch => {
+        HttpRequest
+        .post('/api/render/addRender')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success("添加成功");
+                dispatch({
+                    type: ADD_RENDER,
+                    data: resp.body,
+                })
+            }else{
+                message.warn("添加失败");
+            }
+        })
+    }
+}
+export function editRender(params) {
+    return dispatch => {
+        HttpRequest
+        .put('/api/render/editRender')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success("修改成功");
+                getRenderDetail({id: params._id})(dispatch);
+            }else{
+                message.warn("修改失败");
+            }
+        })
+    }
+}
+export function delRender(params) {
+    return dispatch => {
+        HttpRequest
+        .del('/api/render/delRender')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success('删除信息成功');
+                getOnlineDemoList({keyword: ""})(dispatch);
+            }else{
+                message.warn(resp.body.message);
+            }
+        })
+    }
+}
+export function delImg(params) {
+    return dispatch => {
+        HttpRequest
+        .del('/api/delImg')
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                getOnlineDemoList({keyword: ""})(dispatch);
+            }else{
+                message.warn(resp.body.message);
             }
         })
     }

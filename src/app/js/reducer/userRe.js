@@ -9,6 +9,9 @@ import {
     GET_NEWS_DETAIL,
     GET_CONTACT_LIST,
     GET_CASE_LIST,
+    GET_RENDER_DETAIL,
+    POST_IMG_FILE,
+    ADD_RENDER,
 } from '../action/userAc';
 
 export default function (state={
@@ -19,6 +22,9 @@ export default function (state={
     newsDetail: {},
     caseList: {},
     contactList: {},
+    renderDetail: {},
+    uploadFile: {},
+    addRender: {},
     newsList: {}}, action) {
     switch(action.type) {
         case LOGIN:
@@ -41,6 +47,12 @@ export default function (state={
             return Object.assign({}, state, {contactList: action.data});
         case GET_CASE_LIST:
             return Object.assign({}, state, {caseList: action.data});
+        case GET_RENDER_DETAIL:
+            return Object.assign({}, state, {renderDetail: action.data});
+        case POST_IMG_FILE:
+            return Object.assign({}, state, {uploadFile: action.data});
+        case ADD_RENDER:
+            return Object.assign({}, state, {addRender: action.data});
         default:
             return state;
 

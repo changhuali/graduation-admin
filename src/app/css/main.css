@@ -108,3 +108,10 @@
     top: 0;
     right: 0;
 }
+.render-wrap{
+    text-align: center;
+}
+.render-title{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
