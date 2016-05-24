@@ -297,7 +297,7 @@ Model.updateNews = function(req, callback) {
         }
     })
 }
-Model.getNewsDetail = function(req, callback) {
+Model.getRenderDetail = function(req, callback) {
     Model.onlineDemoModel.findOne({_id: req.query.id}, function(err, data) {
         if(err) {
             console.log(err);

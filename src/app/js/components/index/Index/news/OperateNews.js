@@ -54,8 +54,9 @@ export default class OperateNews extends Component {
 
     addSelect(key, value) {
         var params = {[key]: value};
+        console.log(Object.assign(this.state.addData, params));
         this.setState({
-            data: Object.assign({}, this.state.addData, params),
+            data: Object.assign(this.state.addData, params),
         })
     }
 

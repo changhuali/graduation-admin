@@ -392,7 +392,7 @@ router.post('/family/postImgFile', function(req, res) {
 })
 
 router.get('/render/renderDetail', function(req, res) {
-    Model.getNewsDetail(req, function(status, data) {
+    Model.getRenderDetail(req, function(status, data) {
         if(status == 200) {
             res.statusCode = 200;
             res.send({
