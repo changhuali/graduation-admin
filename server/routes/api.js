@@ -328,6 +328,39 @@ router.put('/news/updateNews', function(req, res) {
         }
     })
 })
+router.post('/news/addNews', function(req, res) {
+    Model.addNews(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+
+router.delete('/news/delNews', function(req, res) {
+    Model.delNews(req, function(status, data){
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
 
 router.post('/render/addRender', function(req, res){
     Model.addRender(req, function(status, data) {

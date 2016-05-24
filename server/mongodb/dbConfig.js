@@ -60,6 +60,7 @@ var imformationSchema = new mongoose.Schema({
     title: String,
     type: String,
     viewNum: Number,
+    desc: String,
     time: String,
     content: String,
     img: String,
@@ -275,6 +276,15 @@ Model.getNewsList = function(req, callback) {
         }
     })
 }
+Model.addNews = function(req, callback) {
+    Model.imformationModel.create(req.body, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
 Model.getNewsDetail = function(req, callback) {
     var params = {_id: req.query.id};
     console.log(params);
@@ -289,7 +299,25 @@ Model.getNewsDetail = function(req, callback) {
 }
 Model.updateNews = function(req, callback) {
     var params = req.body;
-    Model.imformationModel.update({_id: params._id}, {$set: {title: params.title, content: params.content, type: params.type, desc: params.desc}}, function(err, data) {
+    console.log(params, '====params');
+    Model.imformationModel.update(
+        {_id: params._id},
+        {$set: {
+            title: params.title,
+            content: params.content,
+            type: params.type,
+            desc: params.desc}
+        },
+        function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
+Model.delNews = function(req, callback) {
+    Model.imformationModel.remove({_id: req.body.id}, function(err, data) {
         if(err) {
             console.log(err);
         } else {

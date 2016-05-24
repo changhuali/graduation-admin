@@ -17,25 +17,20 @@ export default class OperateNews extends Component {
                 content: '',
                 img: '',
             },
-            img: '',
         }
     }
 
-    selectChange(key, value) {
+    selectChange(obj, key, value) {
         var params = {[key]: value};
         this.setState({
-            data: Object.assign({}, this.state.data, params),
+            [obj]: Object.assign({}, this.state[obj], params),
         })
     }
 
-    submit() {
-        this.props.userBoundAc.updateNews(this.state.data);
-    }
-
-    onChange(key, evt) {
+    inputChange(obj, key, evt) {
         var params = {[key]: evt.target.value};
         this.setState({
-            data: Object.assign({}, this.state.data, params),
+            [obj]: Object.assign({}, this.state[obj], params),
         })
     }
 
@@ -46,20 +41,15 @@ export default class OperateNews extends Component {
         });
     }
 
-    addImg(evt) {
-        this.setState({
-            img: evt.target.value,
-        })
+    editNews() {
+        this.props.userBoundAc.updateNews(this.state.data);
     }
 
-    addSelect(key, value) {
-        var params = {[key]: value};
-        console.log(Object.assign(this.state.addData, params));
-        this.setState({
-            data: Object.assign(this.state.addData, params),
-        })
+    addNews() {
+        var date = new Date();
+        var params = {time: date.toLocaleString()};
+        this.props.userBoundAc.addNews(Object.assign(this.state.addData, params));
     }
-
 
     componentDidMount() {
         var id = this.props.location.query.id;
@@ -83,7 +73,7 @@ export default class OperateNews extends Component {
                     <h2>{data.title}</h2>
                     <div>
                         <span>{'发布时间: '+data.time}</span>
-                        <span>{'新闻分类: '+data.type}</span><span>{'浏览数：'+(data.viewNum+1)}</span>
+                        <span>{'新闻分类: '+data.type}</span><span>{'浏览数：' + data.viewNum}</span>
                     </div>
                     <div id="imformationDetail">{data.content}</div>
                 </div>
@@ -91,54 +81,52 @@ export default class OperateNews extends Component {
                 <div className="apply">
                     <FormItem
                         label="标题">
-                        <Input onChange={this.onChange.bind(this, 'title')} value={data.title} />
+                        <Input onChange={this.inputChange.bind(this, 'data', 'title')} value={data.title} />
                     </FormItem>
                     <FormItem
                         label="类别">
-                        <Select onChange={this.addSelect.bind(this, 'type')} style={{width: '150px'}} value={data.type}>
+                        <Select onChange={this.selectChange.bind(this, 'data', 'type')} style={{width: '150px'}} value={data.type}>
                             <Option value='公司新闻'>公司新闻</Option>
                             <Option value='行业新闻'>行业新闻</Option>
+                            <Option value='其他'>其他</Option>
                         </Select>
                     </FormItem>
                     <FormItem
                         label="描述">
-                        <Input onChange={this.onChange.bind(this, 'desc')} value={data.desc} />
+                        <Input onChange={this.inputChange.bind(this, 'data', 'desc')} value={data.desc} />
                     </FormItem>
                     <FormItem
                         label="内容">
-                        <Input type="textarea" onChange={this.onChange.bind(this, 'content')} value={data.content} />
+                        <Input type="textarea" onChange={this.inputChange.bind(this, 'data', 'content')} value={data.content} />
                     </FormItem>
                     <FormItem>
-                        <Button onClick={this.submit.bind(this)}>提交</Button>
+                        <Button onClick={this.editNews.bind(this)}>提交</Button>
                     </FormItem>
                 </div>
                 :this.props.location.query.type == 'add' ?
                 <div className="apply">
                     <FormItem
                         label="标题">
-                        <Input onChange={this.addChange.bind(this, 'title')} value={addData.title} />
+                        <Input onChange={this.inputChange.bind(this, 'addData', 'title')} value={addData.title} />
                     </FormItem>
                     <FormItem
                         label="类别">
-                        <Select onChange={this.selectChange.bind(this, 'type')} style={{width: '150px'}} value={addData.type}>
+                        <Select onChange={this.selectChange.bind(this, 'addData', 'type')} style={{width: '150px'}} value={addData.type}>
                             <Option value='公司新闻'>公司新闻</Option>
                             <Option value='行业新闻'>行业新闻</Option>
+                            <Option value='其他'>其他</Option>
                         </Select>
                     </FormItem>
                     <FormItem
-                        label="图片">
-                        <Input type="file" onChange={this.addImg.bind(this, 'content')} value={this.state.img} />
-                    </FormItem>
-                    <FormItem
                         label="描述">
-                        <Input onChange={this.onChange.bind(this, 'desc')} value={addData.desc} />
+                        <Input onChange={this.inputChange.bind(this, 'addData', 'desc')} value={addData.desc} />
                     </FormItem>
                     <FormItem
                         label="内容">
-                        <Input type="textarea" onChange={this.addChange.bind(this, 'content')} value={addData.content} />
+                        <Input type="textarea" onChange={this.inputChange.bind(this, 'addData', 'content')} value={addData.content} />
                     </FormItem>
                     <FormItem>
-                        <Button onClick={this.submit.bind(this)}>提交</Button>
+                        <Button onClick={this.addNews.bind(this)}>提交</Button>
                     </FormItem>
                 </div>
                 :

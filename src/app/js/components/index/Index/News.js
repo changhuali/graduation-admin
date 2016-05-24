@@ -32,7 +32,7 @@ export default class News extends Component{
     }
 
     delete(id) {
-        console.log(id);
+        this.props.userBoundAc.delNews({id: id});
     }
 
     componentDidMount() {

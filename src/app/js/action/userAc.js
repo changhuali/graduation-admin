@@ -184,6 +184,20 @@ export function getNewsList(params) {
         })
     }
 }
+export function addNews(params) {
+    return dispatch => {
+        HttpRequest
+        .post('/api/news/addNews')
+        .send(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('添加成功', 3);
+            } else {
+                message.success('添加失败', 3);
+            }
+        })
+    }
+}
 export function contactAction(params) {
     return dispatch => {
         HttpRequest
@@ -248,6 +262,22 @@ export function updateNews(params) {
                 message.success('修改成功', 3);
             } else {
                 message.warn('修改失败', 3);
+            }
+        })
+    }
+}
+
+export function delNews(params) {
+    return dispatch => {
+        HttpRequest
+        .del('/api/news/delNews')
+        .send(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('删除成功', 3);
+                getNewsList()(dispatch);
+            } else {
+                message.warn('删除失败', 3);
             }
         })
     }
