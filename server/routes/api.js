@@ -378,28 +378,37 @@ router.post('/render/addRender', function(req, res){
     })
 })
 
-function storeImg(req, dirStr, callback) {
+function renameImg(files, dirname, callback) {
+    for(var key in files) {
+        var name = key;
+        const type = files[key].name.split('.')[1];
+        var newPath = dirname + name + '.' +type;
+        fs.rename(files[key].path, newPath);
+    }
+    callback(200);
+}
+
+function storeImg(req, callback) {
+    const ROOT_DIR = path.join(__dirname, '../../../graduation-project/src/app/images');
     var form = new formidable.IncomingForm();
-    var dir = path.join(__dirname, '../../../graduation-project/src/app/images');
-    form.uploadDir=__dirname;
+    var dirStr = req.query.dirStr;
+    var id = req.query.id;
+    form.uploadDir = path.join(__dirname, '../../upload');
     form.keepExtensions = true;
     form.maxFieldsSize = 2 * 1024 * 1024;
+    form.multiple = true;
+    var dirname = id != undefined ? ROOT_DIR + dirStr  + id + '/' : ROOT_DIR + dirStr;
     form.parse(req, function(err, fields, files) {
+        console.log(files);
         if(err) {
             callback(500);
         } else {
-            const type = files.img.name.split('.')[1];
-            var dirname = dir + dirStr;
-            const name = Date.now();
-            var newPath = dirname + name + '.' +type;
             fs.exists(dirname, function(exists) {
                 if(exists) {
-                    fs.renameSync(files.img.path, newPath);
-                    callback(200, {img: dirStr + name + '.' +type});
+                    renameImg(files, dirname, callback);
                 } else {
-                    fs.mkdir(dir,function(error){
-                        fs.renameSync(files.img.path, newPath);
-                        callback(200, {img: dirStr + name + '.' +type});
+                    fs.mkdir(dirname, function(error){
+                        renameImg(files, dirname, callback);
                     })
                 }
             });
@@ -407,13 +416,10 @@ function storeImg(req, dirStr, callback) {
     })
 }
 
-router.post('/family/postImgFile', function(req, res) {
-    storeImg(req, '/onlineDemo/', function(status, data) {
+router.post('/upload/img', function(req, res) {
+    storeImg(req, function(status, data) {
         if(status == 200) {
             res.statusCode = 200;
-            res.send({
-                data: data,
-            })
         }else{
             res.statusCode = 500;
             res.send({

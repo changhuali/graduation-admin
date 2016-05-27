@@ -314,18 +314,15 @@ export function delCaseItem(params) {
     }
 }
 
-export function postImgFile(params) {
+export function uploadImg(dirStr, params, id) {
     return dispatch => {
         HttpRequest
-        .post('/api/family/postImgFile')
+        .post('/api/upload/img?dirStr=' + dirStr + '&id=' + id)
         .send(params)
         .end((err, resp) => {
             interceptorAction(err, resp);
             if(resp.ok) {
-                dispatch({
-                    type: POST_IMG_FILE,
-                    data: resp.body,
-                })
+                message.success('图片上传成功');
             }else{
                 message.warn("图片上传失败");
             }
@@ -409,6 +406,21 @@ export function delImg(params) {
                 getOnlineDemoList({keyword: ""})(dispatch);
             }else{
                 message.warn(resp.body.message);
+            }
+        })
+    }
+}
+
+export function addCase(params) {
+    return dispatch => {
+        HttpRequest
+        .post('/api/family/addCase')
+        .send(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('信息保存成功');
+            } else {
+                message.warn('信息保存失败');
             }
         })
     }

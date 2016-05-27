@@ -8,148 +8,158 @@ export default class RenderForm extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            num: 1,
+            title: '',
+            desc: '',
+            img1: '',
+            img2: '',
+            img3: '',
+            img4: '',
+            img5: '',
+            detail: [{title: '', img: ''}],
         }
     }
 
-    textChange(e) {
-        var data = new FormData();
-        var node = document.getElementById(e.target.id);
-        data.append('photo', node.files[0]);
-        this.props.userBoundAc.postImgFile(data);
+    inputChange(key, evt) {
+        this.setState({
+            [key]: evt.target.value,
+        });
+    }
+
+    detailInputChange(idx, evt) {
+        var arr = this.state.detail;
+        var obj = {title: evt.target.value};
+        arr[idx] = Object.assign({}, arr[idx], obj);
+        this.setState({
+            detail: arr,
+        })
+    }
+
+    getFileData(fileData, idx) {
+        this.setState({
+            ['img'+idx]: fileData,
+        })
+        console.log('img'+idx, fileData);
+    }
+
+    getDetailFileData(fileData, idx) {
+        var arr = this.state.detail;
+        var obj = {img: fileData};
+        arr[idx] = Object.assign({}, arr[idx], obj);
+        this.setState({
+            detail: arr,
+        })
+        console.log(arr);
+    }
+
+    addDetail() {
+        var arr = this.state.detail;
+        arr.push({title: '', img: ''});
+        this.setState({
+            num: this.state.num+1,
+            detail: arr,
+        })
+    }
+
+    getListImg() {
+        var file = {};
+        for(var a=1; a<=5; a++) {
+            file['img'+a] = this.state['img'+a];
+        }
+        return file;
+    }
+
+    getDetailImg() {
+        var file = {};
+        this.state.detail.map((obj, idx) => {
+            file['img'+(idx+1)] = obj.img;
+        });
+        return file;
+    }
+
+    uploadListImg(dirStr, data, id) {
+        var formData = new FormData();
+        data.map((key, idx) => {
+            formData.append('img'+idx, data.img);
+        });
+        this.props.userBoundAc.uploadImg(dirStr, formData, id);
+    }
+
+    addCase() {
+        var params = {
+            title: this.state.title,
+            description: this.state.desc,
+        };
+        this.props.userBoundAc.addCase(params);
+    }
+
+    createImgItem(num) {
+        var list = [];
+        for(var i=1; i<=num; i++) {
+            list.push(
+                <FormItem
+                    key={i}
+                    label={"图"+i+"："}
+                    labelCol={{span: 6}}
+                    wrapperCol={{span: 14}}>
+                    <Upload {...this.props} idx={i} getFileData={this.getFileData.bind(this)} />
+                </FormItem>
+            )
+        }
+        return list;
+    }
+
+    createDetailItem() {
+        const detail = this.state.detail;
+        var list = [];
+        for(var i=0; i<this.state.num; i++) {
+            list.push(
+                <div>
+                    <FormItem
+                        label="描述："
+                        labelCol={{span: 6}}
+                        wrapperCol={{span: 14}}>
+                        <Input onChange={this.detailInputChange.bind(this, i)} value={detail[i]['title']} />
+                    </FormItem>
+                    <FormItem
+                        label="图片："
+                        labelCol={{span: 6}}
+                        wrapperCol={{span: 14}}>
+                        <Upload {...this.props} idx={i} getFileData={this.getDetailFileData.bind(this)} />
+                    </FormItem>
+                </div>
+            )
+        }
+        return list;
     }
 
     render() {
+        const config = {
+            labelCol:{ span: 6 },
+            wrapperCol:{ span: 14 }
+        };
+        const data = this.state.addData;
+        const base = this.state;
         return (
             <div className="apply">
                 <Form horizontal>
                     列表页面数据
                     <FormItem
-                        id="control-textarea"
                         label="案例标题："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Input  />
+                        {...config} >
+                        <Input onChange={this.inputChange.bind(this, 'title')} value={base.title} />
                     </FormItem>
 
                     <FormItem
-                        id="control-textarea"
                         label="案例描述："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Input type="textarea" rows="3" />
+                        {...config} >
+                        <Input type="textarea" rows="3" onChange={this.inputChange.bind(this, 'desc')} value={base.desc} />
                     </FormItem>
-
-                    <FormItem
-                        id="control-textarea"
-                        label="图1："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-
-                    <FormItem
-                        id="control-textarea"
-                        label="图2："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-
-                    <FormItem
-                        id="control-textarea"
-                        label="图3："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-
-                    <FormItem
-                        id="control-textarea"
-                        label="图4："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-
-                    <FormItem
-                        id="control-textarea"
-                        label="图5："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
+                    {this.createImgItem(5)}
                     详情页面数据
-                    <FormItem
-
-                        label="描述："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Input placeholder="Please enter..." />
-                    </FormItem>
-                    <FormItem
-                        id="control-textarea"
-                        label="图片："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-                    <FormItem
-
-                        label="描述："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Input placeholder="Please enter..." />
-                    </FormItem>
-                    <FormItem
-                        id="control-textarea"
-                        label="图片："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-                    <FormItem
-
-                        label="描述："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Input placeholder="Please enter..." />
-                    </FormItem>
-                    <FormItem
-                        id="control-textarea"
-                        label="图片："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-                    <FormItem
-
-                        label="描述："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Input placeholder="Please enter..." />
-                    </FormItem>
-                    <FormItem
-                        id="control-textarea"
-                        label="图片："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-                    <FormItem
-
-                        label="描述："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Input placeholder="Please enter..." />
-                    </FormItem>
-                    <FormItem
-                        id="control-textarea"
-                        label="图片："
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}>
-                        <Upload {...this.props} />
-                    </FormItem>
-                    <Button>添加</Button>
+                    {this.createDetailItem()}
+                    <Button onClick={this.addDetail.bind(this)}>增加详情</Button>
+                    <Button onClick={this.addCase.bind(this)}>添加</Button>
                     <Button>重置</Button>
                 </Form>
             </div>
@@ -167,13 +177,9 @@ class Upload extends Component {
 
     textChange(e) {
         var fileObj = e.target.files[0];
-        console.log(fileObj);
-        var form = new FormData();
-        form.append("file", fileObj);
         this.setState({
             filename: e.target.files[0]['name'],
         });
-        // this.props.userBoundAc.postImgFile(form);
         var reader = new FileReader();
         reader.readAsDataURL(fileObj);
         reader.onload = (e) => {
@@ -181,16 +187,29 @@ class Upload extends Component {
                 imgUrl: reader.result,
             })
         }
+        this.props.getFileData(fileObj, this.props.idx);
     }
 
     render() {
         return (
             <div className="clearfix">
                 <a href="javascript:;" className="upload-a">
-                    <input id={this.props.id} className="upload-input" type="file" onChange={this.textChange.bind(this)} />
-                    <span>{this.state.filename == "" ? "上传图片" : this.state.filename}</span>
+                    <input id={this.props.id}
+                        className="upload-input"
+                        type="file"
+                        onChange={this.textChange.bind(this)} />
+                    <span>
+                    {this.state.filename == ""
+                        ?
+                        "上传图片"
+                        : this.state.filename
+                    }
+                    </span>
                 </a>
-                {this.state.imgUrl != "" ? <img style={{width: '72px', height: '100%'}} src={this.state.imgUrl} />:""}
+                {this.state.imgUrl != "" ?
+                    <img style={{width: '72px', height: '100%'}} src={this.state.imgUrl} />
+                    :""
+                }
             </div>
         )
     }
