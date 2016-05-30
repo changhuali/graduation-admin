@@ -46,11 +46,11 @@ var familyCaseSchama = new mongoose.Schema({
     id: String,
     title:  String,
     description: String,
-    img_1: String,
-    img_2: String,
-    img_3: String,
-    img_4: String,
-    img_5: String,
+    img1: String,
+    img2: String,
+    img3: String,
+    img4: String,
+    img5: String,
     data: Array,
 })
 
@@ -177,6 +177,30 @@ Model.getFamilyCaseList = function(req, callback) {
         if(err) {
             console.log(err);
         }else{
+            callback(200, data);
+        }
+    })
+}
+Model.addCase = function(req, callback) {
+    Model.familyCaseModel.create(req.body, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
+Model.saveImg = function(query, obj, callback) {
+    var model = '';
+    switch (query.dirStr) {
+        case 'familyCase':
+            model = Model.familyCaseModel;
+            break;
+    }
+    model.update({_id: query.id}, {$set: obj}, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
             callback(200, data);
         }
     })

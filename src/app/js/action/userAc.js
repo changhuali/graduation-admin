@@ -314,22 +314,6 @@ export function delCaseItem(params) {
     }
 }
 
-export function uploadImg(dirStr, params, id) {
-    return dispatch => {
-        HttpRequest
-        .post('/api/upload/img?dirStr=' + dirStr + '&id=' + id)
-        .send(params)
-        .end((err, resp) => {
-            interceptorAction(err, resp);
-            if(resp.ok) {
-                message.success('图片上传成功');
-            }else{
-                message.warn("图片上传失败");
-            }
-        })
-    }
-}
-
 export function getRenderDetail(params) {
     return dispatch => {
         HttpRequest
@@ -411,7 +395,23 @@ export function delImg(params) {
     }
 }
 
-export function addCase(params) {
+export function uploadImg(id, dirStr, params) {
+    return dispatch => {
+        HttpRequest
+        .post('/api/upload/img?dirStr=' + dirStr + '&id=' + id)
+        .send(params)
+        .end((err, resp) => {
+            interceptorAction(err, resp);
+            if(resp.ok) {
+                message.success('图片上传成功');
+            }else{
+                message.warn("图片上传失败");
+            }
+        })
+    }
+}
+
+export function addCase(params, listFile, detailFile) {
     return dispatch => {
         HttpRequest
         .post('/api/family/addCase')
@@ -419,6 +419,7 @@ export function addCase(params) {
         .end((err, resp) => {
             if(resp.ok) {
                 message.success('信息保存成功');
+                uploadImg(resp.body.data._id, 'familyCase', listFile)(dispatch);
             } else {
                 message.warn('信息保存失败');
             }

@@ -104,6 +104,22 @@ router.get('/family/caseList', function(req, res) {
         }
     })
 })
+router.post('/family/addCase', function(req, res) {
+    Model.addCase(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
 router.put('/family/editCaseItem', function(req, res) {
     Model.editCaseItem(req, function(status, data) {
         if(status == 200) {
@@ -378,26 +394,35 @@ router.post('/render/addRender', function(req, res){
     })
 })
 
-function renameImg(files, dirname, callback) {
+function renameImg(req, dirname, files, callback) {
+    var obj = {};
     for(var key in files) {
         var name = key;
         const type = files[key].name.split('.')[1];
         var newPath = dirname + name + '.' +type;
         fs.rename(files[key].path, newPath);
+        console.log(files[key].path, newPath);
+        obj[key] = '/' + req.query.dirStr + '/' + key + '.' + type;
     }
-    callback(200);
+    Model.saveImg(req.query, obj, callback);
 }
 
 function storeImg(req, callback) {
-    const ROOT_DIR = path.join(__dirname, '../../../graduation-project/src/app/images');
     var form = new formidable.IncomingForm();
-    var dirStr = req.query.dirStr;
-    var id = req.query.id;
     form.uploadDir = path.join(__dirname, '../../upload');
     form.keepExtensions = true;
     form.maxFieldsSize = 2 * 1024 * 1024;
     form.multiple = true;
-    var dirname = id != undefined ? ROOT_DIR + dirStr  + id + '/' : ROOT_DIR + dirStr;
+    const ROOT_DIR = path.join(__dirname, '../../../graduation-project/src/app/images/');
+    var dirStr = req.query.dirStr;
+    var id = req.query.id;
+    var dirname = ROOT_DIR;
+    if(dirStr) {
+        dirname = dirname + dirStr + '/';
+    }
+    if(id) {
+        dirname = dirname + id + '/';
+    }
     form.parse(req, function(err, fields, files) {
         console.log(files);
         if(err) {
@@ -405,10 +430,10 @@ function storeImg(req, callback) {
         } else {
             fs.exists(dirname, function(exists) {
                 if(exists) {
-                    renameImg(files, dirname, callback);
+                    renameImg(req, dirname, files, callback);
                 } else {
                     fs.mkdir(dirname, function(error){
-                        renameImg(files, dirname, callback);
+                        renameImg(req, dirname, files, callback);
                     })
                 }
             });
@@ -418,8 +443,10 @@ function storeImg(req, callback) {
 
 router.post('/upload/img', function(req, res) {
     storeImg(req, function(status, data) {
+        console.log(status, data, '---===');
         if(status == 200) {
             res.statusCode = 200;
+            res.send({data: data});
         }else{
             res.statusCode = 500;
             res.send({

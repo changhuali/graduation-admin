@@ -53,9 +53,9 @@ export default class Case extends Component{
         var data = {
             config: [
                 {key: 'title', width: '2', dictKey: '案例标题'},
-                {key: 'description', width: '7', dictKey: '案例描述'},
-                {key: 'time', width: '7', dictKey: '添加时间'},
-                {key: 'operate', width: '1', dictKey: '操作', handle: this.operate},
+                {key: 'description', width: '4', dictKey: '案例描述'},
+                {key: 'time', width: '2', dictKey: '添加时间'},
+                {key: 'operate', width: '2', dictKey: '操作', handle: this.operate},
             ],
             item: this.state.data,
         };

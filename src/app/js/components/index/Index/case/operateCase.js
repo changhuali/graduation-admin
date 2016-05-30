@@ -4,7 +4,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 
-export default class RenderForm extends Component{
+export default class OperateCase extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -77,20 +77,22 @@ export default class RenderForm extends Component{
         return file;
     }
 
-    uploadListImg(dirStr, data, id) {
+    uploadListImg(data) {
         var formData = new FormData();
-        data.map((key, idx) => {
-            formData.append('img'+idx, data.img);
+        Object.keys(data).map((key, idx) => {
+            formData.append(key, data[key]);
         });
-        this.props.userBoundAc.uploadImg(dirStr, formData, id);
+        return formData;
     }
 
     addCase() {
+        var listImg = this.uploadListImg(this.getListImg());
+        var detailImg = this.uploadListImg(this.getDetailImg());
         var params = {
             title: this.state.title,
             description: this.state.desc,
         };
-        this.props.userBoundAc.addCase(params);
+        this.props.userBoundAc.addCase(params, listImg, detailImg);
     }
 
     createImgItem(num) {
@@ -114,7 +116,7 @@ export default class RenderForm extends Component{
         var list = [];
         for(var i=0; i<this.state.num; i++) {
             list.push(
-                <div>
+                <div key={i}>
                     <FormItem
                         label="描述："
                         labelCol={{span: 6}}
