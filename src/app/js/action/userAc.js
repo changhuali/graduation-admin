@@ -11,6 +11,7 @@ export const GET_NEWS_DETAIL = 'GET_NEWS_DETAIL';
 export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
 export const GET_CASE_LIST = "GET_CASE_LIST";
 export const GET_RENDER_DETAIL = "GET_RENDER_DETAIL";
+export const GET_CASE_DETAIL = "GET_CASE_DETAIL";
 export const POST_IMG_FILE = 'POST_IMG_FILE';
 export const ADD_RENDER = 'ADD_RENDER';
 
@@ -314,6 +315,20 @@ export function delCaseItem(params) {
     }
 }
 
+export function getCaseDetail(params) {
+    return dispatch => {
+        HttpRequest
+        .get('/api/family/caseDetail')
+        .query(params)
+        .end((err, resp) => {
+            dispatch({
+                type: GET_CASE_DETAIL,
+                data: resp.body,
+            })
+        })
+    }
+}
+
 export function getRenderDetail(params) {
     return dispatch => {
         HttpRequest
@@ -412,16 +427,54 @@ export function uploadImg(id, dirStr, params) {
 }
 
 export function addCase(params, listFile, detailFile) {
+    console.log(params);
     return dispatch => {
         HttpRequest
         .post('/api/family/addCase')
         .send(params)
         .end((err, resp) => {
             if(resp.ok) {
-                message.success('信息保存成功');
-                uploadImg(resp.body.data._id, 'familyCase', listFile)(dispatch);
+                uploadImg(resp.body.data._id, 'familyCase/list', listFile)(dispatch);
+                uploadImg(resp.body.data._id, 'familyCase/caseDetail', detailFile)(dispatch);
             } else {
                 message.warn('信息保存失败');
+            }
+        })
+    }
+}
+
+export function changeCase(params) {
+    var date = new Date();
+    var baseInfo = {
+        title: params.title,
+        description: params.description,
+        time: date.toLocaleString(),
+    };
+    return dispatch => {
+        HttpRequest
+        .put('/api/family/changeCase?id='+params._id)
+        .send(baseInfo)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('修改成功');
+            } else {
+                message.warn('修改失败');
+            }
+        })
+    }
+}
+
+export function delCase(params) {
+    return dispatch => {
+        HttpRequest
+        .del('/api/family/delCase')
+        .send(params)
+        .end((err, resp) => {
+            if(resp.ok) {
+                message.success('删除成功', 3);
+                getCaseList()(dispatch);
+            } else {
+                message.warn('删除失败', 3);
             }
         })
     }

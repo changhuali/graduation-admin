@@ -51,6 +51,7 @@ var familyCaseSchama = new mongoose.Schema({
     img3: String,
     img4: String,
     img5: String,
+    time: String,
     data: Array,
 })
 
@@ -181,8 +182,28 @@ Model.getFamilyCaseList = function(req, callback) {
         }
     })
 }
+Model.getCaseDetail = function(req, callback) {
+    Model.familyCaseModel.findOne({_id: req.query.id}, function(err, data) {
+        if(err) {
+            console.log(err);
+        }else{
+            callback(200, data);
+        }
+    })
+}
 Model.addCase = function(req, callback) {
     Model.familyCaseModel.create(req.body, function(err, data) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback(200, data);
+        }
+    })
+}
+Model.changeCase = function(req, callback) {
+    var params = req.body;
+    delete params._id;
+    Model.familyCaseModel.update({_id: req.query.id}, {$set: params}, function(err, data) {
         if(err) {
             console.log(err);
         } else {
@@ -193,21 +214,43 @@ Model.addCase = function(req, callback) {
 Model.saveImg = function(query, obj, callback) {
     var model = '';
     switch (query.dirStr) {
-        case 'familyCase':
+        case 'familyCase/list':
+        case 'familyCase/caseDetail':
             model = Model.familyCaseModel;
             break;
     }
-    model.update({_id: query.id}, {$set: obj}, function(err, data) {
-        if(err) {
-            console.log(err);
-        } else {
-            callback(200, data);
-        }
-    })
+    if(query.dirStr == 'familyCase/caseDetail') {
+        model.findOne({_id: query.id}, function(err, data) {
+            var list = [];
+            if(err) {
+                console.log(err);
+            } else {
+                data.data.map(function(detailItem, idx) {
+                    list.push(Object.assign(detailItem, {img: obj['img' + (idx + 1)]}));
+                })
+                console.log(list, '====------');
+                model.update({_id: query.id}, {$set: {data: list}}, function(err, data) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        callback(200, data);
+                    }
+                })
+            }
+        })
+    }else{
+        model.update({_id: query.id}, {$set: obj}, function(err, data) {
+            if(err) {
+                console.log(err);
+            } else {
+                callback(200, data);
+            }
+        })
+    }
 }
 Model.editCaseItem = function(req, callback) {
 }
-Model.delCaseItem = function(req, callback) {
+Model.delCase = function(req, callback) {
     Model.familyCaseModel.remove({_id: req.body.id}, function(err, data) {
         if(err) {
             console.log(err);

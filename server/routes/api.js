@@ -402,7 +402,7 @@ function renameImg(req, dirname, files, callback) {
         var newPath = dirname + name + '.' +type;
         fs.rename(files[key].path, newPath);
         console.log(files[key].path, newPath);
-        obj[key] = '/' + req.query.dirStr + '/' + key + '.' + type;
+        obj[key] = '/' + req.query.dirStr + '/' + req.query.id + '/' + key + '.' + type;
     }
     Model.saveImg(req.query, obj, callback);
 }
@@ -519,6 +519,54 @@ router.delete('/delImg', function(req, res) {
             })
         }
     });
+})
+router.put('/family/changeCase', function(req, res) {
+    Model.changeCase(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+router.get('/family/caseDetail', function(req, res) {
+    Model.getCaseDetail(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
+})
+router.delete('/family/delCase', function(req, res) {
+    Model.delCase(req, function(status, data) {
+        if(status == 200) {
+            res.statusCode = 200;
+            res.send({
+                data: data,
+            })
+        }else{
+            res.statusCode = 500;
+            res.send({
+                errorCode: 500,
+                message: '服务器内部错误',
+            })
+        }
+    })
 })
 
 module.exports = router;

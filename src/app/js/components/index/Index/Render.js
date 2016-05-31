@@ -19,14 +19,15 @@ export default class Render extends Component{
         this.props.userBoundAc.getOnlineDemoList({keyword: value});
     }
 
-    view(id) {
-        this.context.router.push({pathname: '/operateRender', query: {type: 'view', id: id}});
-    }
 
     addRender() {
         this.context.router.push({pathname: '/operateRender', query: {type: 'add'}});
     }
 
+    view(id) {
+        this.context.router.push({pathname: '/operateRender', query: {type: 'view', id: id}});
+    }
+    
     edit(id) {
         this.context.router.push({pathname: '/operateRender', query: {type: 'edit', id: id}});
     }

@@ -16,20 +16,24 @@ export default class Case extends Component{
         }
     }
 
-    handleEdit(id) {
-        console.log(111);
-    }
-
-    handleDelete(id) {
-        this.props.userBoundAc.delCaseItem({id: id});
-    }
-
     getSearchList(value) {
         this.props.userBoundAc.getCaseList({keyword: value});
     }
 
     addCaseItem() {
-        this.context.router.push({pathname: 'operateCase', query: {type: 'add'}});
+        this.context.router.push({pathname: '/operateCase', query: {type: 'add'}});
+    }
+
+    view(id) {
+        this.context.router.push({pathname: '/operateCase', query: {type: 'view', id: id}});
+    }
+
+    edit(id) {
+        this.context.router.push({pathname: '/operateCase', query: {type: 'edit', id: id}});
+    }
+
+    delete(id) {
+        this.props.userBoundAc.delCase({id: id});
     }
 
     componentDidMount() {
@@ -60,8 +64,9 @@ export default class Case extends Component{
             item: this.state.data,
         };
         const operateConfig = [
-            {action: '修改', handle: this.handleEdit, disabledKey: 'none', disabledValue: 'none'},
-            {action: '删除', handle: this.handleDelete, disabledKey: 'none', disabledValue: 'none'},
+            {action: '查看', handle: this.view},
+            {action: '编辑', handle: this.edit},
+            {action: '删除', handle: this.delete},
         ];
         return(
             <div className="apply-wrap">

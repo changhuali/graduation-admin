@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Upload from '../../../common/Upload';
+import Edit from './Edit';
 import { Form, Input, Select, Checkbox, Radio, Button } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -17,6 +19,7 @@ export default class OperateCase extends Component{
             img4: '',
             img5: '',
             detail: [{title: '', img: ''}],
+            editData: '',
         }
     }
 
@@ -88,9 +91,12 @@ export default class OperateCase extends Component{
     addCase() {
         var listImg = this.uploadListImg(this.getListImg());
         var detailImg = this.uploadListImg(this.getDetailImg());
+        var date = new Date();
         var params = {
             title: this.state.title,
             description: this.state.desc,
+            time: date.toLocaleString(),
+            data: this.state.detail,
         };
         this.props.userBoundAc.addCase(params, listImg, detailImg);
     }
@@ -112,7 +118,7 @@ export default class OperateCase extends Component{
     }
 
     createDetailItem() {
-        const detail = this.state.detail;
+        const detail = this.state.data.data;
         var list = [];
         for(var i=0; i<this.state.num; i++) {
             list.push(
@@ -134,84 +140,15 @@ export default class OperateCase extends Component{
         }
         return list;
     }
-
     render() {
-        const config = {
-            labelCol:{ span: 6 },
-            wrapperCol:{ span: 14 }
-        };
-        const data = this.state.addData;
-        const base = this.state;
+        const query = this.props.location.query;
         return (
             <div className="apply">
-                <Form horizontal>
-                    列表页面数据
-                    <FormItem
-                        label="案例标题："
-                        {...config} >
-                        <Input onChange={this.inputChange.bind(this, 'title')} value={base.title} />
-                    </FormItem>
-
-                    <FormItem
-                        label="案例描述："
-                        {...config} >
-                        <Input type="textarea" rows="3" onChange={this.inputChange.bind(this, 'desc')} value={base.desc} />
-                    </FormItem>
-                    {this.createImgItem(5)}
-                    详情页面数据
-                    {this.createDetailItem()}
-                    <Button onClick={this.addDetail.bind(this)}>增加详情</Button>
-                    <Button onClick={this.addCase.bind(this)}>添加</Button>
-                    <Button>重置</Button>
-                </Form>
-            </div>
-        )
-    }
-}
-class Upload extends Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            filename: "",
-            imgUrl: "",
-        }
-    }
-
-    textChange(e) {
-        var fileObj = e.target.files[0];
-        this.setState({
-            filename: e.target.files[0]['name'],
-        });
-        var reader = new FileReader();
-        reader.readAsDataURL(fileObj);
-        reader.onload = (e) => {
-            this.setState({
-                imgUrl: reader.result,
-            })
-        }
-        this.props.getFileData(fileObj, this.props.idx);
-    }
-
-    render() {
-        return (
-            <div className="clearfix">
-                <a href="javascript:;" className="upload-a">
-                    <input id={this.props.id}
-                        className="upload-input"
-                        type="file"
-                        onChange={this.textChange.bind(this)} />
-                    <span>
-                    {this.state.filename == ""
-                        ?
-                        "上传图片"
-                        : this.state.filename
-                    }
-                    </span>
-                </a>
-                {this.state.imgUrl != "" ?
-                    <img style={{width: '72px', height: '100%'}} src={this.state.imgUrl} />
-                    :""
-                }
+                {query.type == 'add' ?
+                "nothing"
+                : query.type == 'edit' ?
+                    <Edit {...this.props} />
+                :""}
             </div>
         )
     }
