@@ -42,7 +42,6 @@ export default class OperateCase extends Component{
         this.setState({
             ['img'+idx]: fileData,
         })
-        console.log('img'+idx, fileData);
     }
 
     getDetailFileData(fileData, idx) {
@@ -77,6 +76,7 @@ export default class OperateCase extends Component{
         this.state.detail.map((obj, idx) => {
             file['img'+(idx+1)] = obj.img;
         });
+        console.log(file, 'listFile');
         return file;
     }
 
@@ -91,12 +91,16 @@ export default class OperateCase extends Component{
     addCase() {
         var listImg = this.uploadListImg(this.getListImg());
         var detailImg = this.uploadListImg(this.getDetailImg());
+        var detail = this.state.data.data;
+        detail.map(obj => {
+            delete obj.img;
+        })
         var date = new Date();
         var params = {
             title: this.state.title,
             description: this.state.desc,
             time: date.toLocaleString(),
-            data: this.state.detail,
+            data: detail,
         };
         this.props.userBoundAc.addCase(params, listImg, detailImg);
     }
@@ -145,9 +149,9 @@ export default class OperateCase extends Component{
         return (
             <div className="apply">
                 {query.type == 'add' ?
-                "nothing"
+                    <Edit {...this.props} type="add" />
                 : query.type == 'edit' ?
-                    <Edit {...this.props} />
+                    <Edit {...this.props} type="edit" />
                 :""}
             </div>
         )

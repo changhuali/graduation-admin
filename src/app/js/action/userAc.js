@@ -443,20 +443,15 @@ export function addCase(params, listFile, detailFile) {
     }
 }
 
-export function changeCase(params) {
-    var date = new Date();
-    var baseInfo = {
-        title: params.title,
-        description: params.description,
-        time: date.toLocaleString(),
-    };
+export function changeCase(id, params, listFile, detailFile) {
     return dispatch => {
         HttpRequest
-        .put('/api/family/changeCase?id='+params._id)
-        .send(baseInfo)
+        .put('/api/family/changeCase?id='+id)
+        .send(params)
         .end((err, resp) => {
             if(resp.ok) {
-                message.success('修改成功');
+                uploadImg(id, 'familyCase/list', listFile)(dispatch);
+                uploadImg(id, 'familyCase/caseDetail', detailFile)(dispatch);
             } else {
                 message.warn('修改失败');
             }

@@ -32,7 +32,7 @@ export default class Upload extends Component {
                         type="file"
                         onChange={this.textChange.bind(this)} />
                     <span>
-                    {this.state.imgUrl == undefined
+                    {(this.state.imgUrl == undefined || this.state.imgUrl == "")
                         ?
                         "上传图片"
                         : "修改图片"

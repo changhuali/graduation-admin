@@ -404,6 +404,7 @@ function renameImg(req, dirname, files, callback) {
         console.log(files[key].path, newPath);
         obj[key] = '/' + req.query.dirStr + '/' + req.query.id + '/' + key + '.' + type;
     }
+    console.log(obj, 'aaaaaaaaaaaaaaa');
     Model.saveImg(req.query, obj, callback);
 }
 

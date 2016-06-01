@@ -10,8 +10,21 @@ export default class Edit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.user.caseDetail.data,
+            data: this.getInitState(),
         }
+    }
+    getInitState() {
+        var state = {
+            title: '',
+            description: '',
+            img1: '',
+            img2: '',
+            img3: '',
+            img4: '',
+            img5: '',
+            data: [{title: '', img: ''}],
+        }
+        return this.props.type == 'edit' ? this.props.user.caseDetail.data : state;
     }
     addDetail() {
         var arr = this.state.data.data;
@@ -84,15 +97,60 @@ export default class Edit extends Component {
         }
         return list;
     }
+    getListImg() {
+        var file = {};
+        for(var a=1; a<=5; a++) {
+            file['img'+a] = this.state.data['img'+a];
+        }
+        return file;
+    }
+
+    getDetailImg() {
+        console.log(this.state.data);
+        var file = {};
+        this.state.data.data.map((obj, idx) => {
+            file['img'+(idx+1)] = obj.img;
+        });
+        return file;
+    }
+    formatFormData(data) {
+        var formData = new FormData();
+        Object.keys(data).map((key, idx) => {
+            formData.append(key, data[key]);
+        });
+        return formData;
+    }
     changeCase() {
-        this.props.userBoundAc.changeCase(this.state.data);
+        var date = new Date();
+        var detail = [];
+        this.state.data.data.map(obj => {
+            detail.push({title: obj.title});
+        })
+        var params = {
+            title: this.state.data.title,
+            description: this.state.data.description,
+            time: date.toLocaleString(),
+            data: detail,
+        };
+        var listFile = this.formatFormData(this.getListImg());
+        var detailFile = this.formatFormData(this.getDetailImg());
+        switch (this.props.type) {
+            case 'edit':
+                this.props.userBoundAc.changeCase(this.state.data._id, params, listFile, detailFile);
+                break;
+            case 'add':
+                this.props.userBoundAc.addCase(params, listFile, detailFile);
+                break;
+        }
     }
     componentDidMount() {
-        const query = this.props.location.query;
-        this.props.userBoundAc.getCaseDetail({id: query.id});
+        if(this.props.type == 'edit') {
+            const query = this.props.location.query;
+            this.props.userBoundAc.getCaseDetail({id: query.id});
+        }
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps.user.caseDetail.data != undefined) {
+        if(nextProps.user.caseDetail.data != undefined && this.props.type == 'edit') {
             this.setState({
                 data: nextProps.user.caseDetail.data,
             })
@@ -128,7 +186,7 @@ export default class Edit extends Component {
                     详情页面数据
                     {this.createDetailItem()}
                     <Button onClick={this.addDetail.bind(this)}>增加详情</Button>
-                    <Button onClick={this.changeCase.bind(this)}>修改案例</Button>
+                    <Button onClick={this.changeCase.bind(this)}>{this.props.type == 'edit' ? '修改案例' : '添加案例'}</Button>
                 </Form>
             );
         }

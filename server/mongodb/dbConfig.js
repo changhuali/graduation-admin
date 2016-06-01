@@ -202,12 +202,21 @@ Model.addCase = function(req, callback) {
 }
 Model.changeCase = function(req, callback) {
     var params = req.body;
-    delete params._id;
-    Model.familyCaseModel.update({_id: req.query.id}, {$set: params}, function(err, data) {
+    Model.familyCaseModel.findOne({_id: req.query.id}, function(err, data) {
         if(err) {
             console.log(err);
         } else {
-            callback(200, data);
+            data.data.map(function(obj, idx) {
+                params.data[idx].img = obj.img;
+            })
+            console.log(params, 'params=====');
+            Model.familyCaseModel.update({_id: req.query.id}, {$set: params}, function(err, data) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    callback(200, data);
+                }
+            })
         }
     })
 }
@@ -226,9 +235,9 @@ Model.saveImg = function(query, obj, callback) {
                 console.log(err);
             } else {
                 data.data.map(function(detailItem, idx) {
-                    list.push(Object.assign(detailItem, {img: obj['img' + (idx + 1)]}));
+                    list.push(Object.assign(detailItem, obj['img' + (idx + 1)] != undefined ? {img: obj['img' + (idx + 1)]} : {}));
                 })
-                console.log(list, '====------');
+                console.log(obj, list, 'null error');
                 model.update({_id: query.id}, {$set: {data: list}}, function(err, data) {
                     if(err) {
                         console.log(err);
