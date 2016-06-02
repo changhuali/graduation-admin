@@ -99,6 +99,7 @@ export default class OperateRender extends Component {
             <div className="apply-wrap">
             {type == 'add' ?
                 <div className="apply">
+                <Form horizontal>
                     <FormItem
                         label="标题">
                         <Input size="small" type="text" style={{width: 200, height: '28'}} onChange={this.inputChange.bind(this, 'addData', 'title')} value={addData.title} />
@@ -133,6 +134,7 @@ export default class OperateRender extends Component {
                     <div>
                         <Button onClick={this.addConfirm.bind(this)}>提交</Button>
                     </div>
+                </Form>
                 </div>
             : data && type == 'view' ?
                 <div className="apply">
@@ -143,6 +145,7 @@ export default class OperateRender extends Component {
                 </div>
             : data && type == 'edit' ?
                 <div className="apply">
+                <Form horizontal>
                     <FormItem
                         label="标题">
                         <Input size="small" type="text" style={{width: 200, height: '28'}} onChange={this.inputChange.bind(this, 'data', 'title')} value={data.title} />
@@ -177,6 +180,7 @@ export default class OperateRender extends Component {
                     <div>
                         <Button onClick={this.editConfirm.bind(this)}>提交</Button>
                     </div>
+                    </Form>
                 </div>
             :
                 <div className="apply">

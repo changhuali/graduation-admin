@@ -97,6 +97,18 @@ export default class Edit extends Component {
         }
         return list;
     }
+    createViewDetail() {
+        var list = [];
+        this.state.data.data.map((obj, idx) => {
+            list.push(
+                <div className="familyCase-detailItem" key={idx}>
+                    <p>{obj.title}</p>
+                    <img src={obj.img} />
+                </div>
+            )
+        })
+        return list;
+    }
     getListImg() {
         var file = {};
         for(var a=1; a<=5; a++) {
@@ -144,13 +156,13 @@ export default class Edit extends Component {
         }
     }
     componentDidMount() {
-        if(this.props.type == 'edit') {
+        if(this.props.type != 'add') {
             const query = this.props.location.query;
             this.props.userBoundAc.getCaseDetail({id: query.id});
         }
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps.user.caseDetail.data != undefined && this.props.type == 'edit') {
+        if(nextProps.user.caseDetail.data != undefined && this.props.type != 'add') {
             this.setState({
                 data: nextProps.user.caseDetail.data,
             })
@@ -167,7 +179,7 @@ export default class Edit extends Component {
             output = <Loading />;
         } else if (data == null) {
             output = <NotFound />;
-        } else {
+        } else if(this.props.type != 'view') {
             output = (
                 <Form horizontal>
                     列表页面数据
@@ -189,6 +201,35 @@ export default class Edit extends Component {
                     <Button onClick={this.changeCase.bind(this)}>{this.props.type == 'edit' ? '修改案例' : '添加案例'}</Button>
                 </Form>
             );
+        } else if(this.props.type == 'view') {
+            output = (
+                <div>
+                    <div>列表信息</div>
+                    <div className="familyCase-item">
+                    <div className="familyCase-info">
+                        <h2 className="familyCase-tit">{data.title}</h2>
+                        <p className="familyCase-text">{data.description.substr(0, 20)}</p>
+                    </div>
+                    <div className="familyCase-img1">
+                        <img src={data.img1} />
+                    </div>
+                    <div className="familyCase-img2">
+                        <img src={data.img2} />
+                    </div>
+                    <div className="familyCase-img3">
+                        <img src={data.img3} />
+                    </div>
+                    <div className="familyCase-img4">
+                        <img src={data.img4} />
+                    </div>
+                    <div className="familyCase-img5">
+                        <img src={data.img5} />
+                    </div>
+                    </div>
+                    <div>详细信息</div>
+                    {this.createViewDetail()}
+                </div>
+            )
         }
         return output;
     }
