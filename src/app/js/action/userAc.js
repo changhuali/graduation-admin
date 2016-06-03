@@ -343,7 +343,7 @@ export function getRenderDetail(params) {
     }
 }
 
-export function addRender(params) {
+export function addRender(params, file) {
     return dispatch => {
         HttpRequest
         .post('/api/render/addRender')
@@ -351,27 +351,22 @@ export function addRender(params) {
         .end((err, resp) => {
             interceptorAction(err, resp);
             if(resp.ok) {
-                message.success("添加成功");
-                dispatch({
-                    type: ADD_RENDER,
-                    data: resp.body,
-                })
+                uploadImg(resp.body.data._id, 'onlineDemo', file)(dispatch);
             }else{
                 message.warn("添加失败");
             }
         })
     }
 }
-export function editRender(params) {
+export function editRender(id, params, file) {
     return dispatch => {
         HttpRequest
-        .put('/api/render/editRender')
+        .put('/api/render/editRender?id='+id)
         .send(params)
         .end((err, resp) => {
             interceptorAction(err, resp);
             if(resp.ok) {
-                message.success("修改成功");
-                getRenderDetail({id: params._id})(dispatch);
+                uploadImg(id, 'onlineDemo', file)(dispatch);
             }else{
                 message.warn("修改失败");
             }

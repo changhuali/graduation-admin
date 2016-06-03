@@ -227,6 +227,9 @@ Model.saveImg = function(query, obj, callback) {
         case 'familyCase/caseDetail':
             model = Model.familyCaseModel;
             break;
+        case 'onlineDemo':
+            model = Model.onlineDemoModel;
+            break;
     }
     if(query.dirStr == 'familyCase/caseDetail') {
         model.findOne({_id: query.id}, function(err, data) {
@@ -422,13 +425,7 @@ Model.addRender = function(req, callback) {
 }
 Model.editRender = function(req, callback) {
     var params = req.body;
-    Model.onlineDemoModel.update({_id: params._id}, {$set: {
-        title: params.title,
-        space: params.space,
-        part: params.part,
-        style: params.style,
-        img: params.img,
-    }}, function(err, data) {
+    Model.onlineDemoModel.update({_id: req.query.id}, {$set: params}, function(err, data) {
         if(err) {
             console.log(err);
         } else {
